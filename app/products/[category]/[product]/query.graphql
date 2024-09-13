@@ -1,0 +1,34 @@
+query FetchProduct($path: String!) {
+  browse {
+    product(path: $path) {
+      hits {
+        name
+        description(format: json)
+        story {
+          title
+          body(format: json)
+          images {
+            key
+            variants {
+              url
+              width
+              height
+            }
+          }
+        }
+        variants {
+          name
+          defaultPrice
+          images {
+            variants {
+              url
+              key
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}

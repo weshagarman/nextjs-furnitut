@@ -1,0 +1,18 @@
+query FetchCategory($path: String!){
+  browse {
+    category(path: $path){
+      hits {
+        name
+        children {
+          hits {
+            __typename
+            ...on product {
+              name
+              path
+            }
+          }
+        }
+      }
+    }
+  }
+}

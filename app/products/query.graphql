@@ -1,0 +1,21 @@
+query FetchAllCategories {
+    browse {
+      category(path: "/products") {
+        hits {
+          id
+          name
+          children {
+            hits {
+              id
+              name
+              ... on category {
+                id
+                name
+                path
+              }
+            }
+          }
+        }
+      }
+    }
+  }
