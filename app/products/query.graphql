@@ -1,21 +1,26 @@
 query FetchAllCategories {
-    browse {
-      category(path: "/products") {
-        hits {
+  browse {
+    category(path: "/products") {
+      hits {
+        id
+        name
+        breadcrumbs {
           id
           name
-          children {
-            hits {
+          path
+        }
+        children {
+          hits {
+            id
+            name
+            ... on category {
               id
               name
-              ... on category {
-                id
-                name
-                path
-              }
+              path
             }
           }
         }
       }
     }
   }
+}

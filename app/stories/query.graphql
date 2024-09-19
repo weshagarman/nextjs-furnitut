@@ -1,0 +1,56 @@
+query FetchAllStories {
+  browse {
+    category(path: "/stories") {
+      hits {
+        title
+        breadcrumbs {
+          path
+          name
+          id
+        }
+        children {
+          hits {
+            id
+            path
+            ... on story {
+              title
+              intro
+              media {
+                image {
+                  url
+                  altText
+                  variants {
+                    url
+                    width
+                    height
+                  }
+                }
+                shoppableImage {
+                  url
+                  altText
+                  variants {
+                    url
+                    width
+                    height
+                  }
+                }
+                video {
+                  thumbnails {
+                    url
+                    altText
+                    variants {
+                      url
+                      width
+                      height
+                    }
+                  }
+                  playlists
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

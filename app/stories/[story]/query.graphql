@@ -1,0 +1,88 @@
+query FetchStory($path: String!) {
+  browse {
+    story(path: $path) {
+      hits {
+        ...storyContent
+        breadcrumbs {
+          path
+          name
+          id
+        }
+        featured {
+          skus
+          items {
+            path
+            resolvedItem {
+              ... on product {
+                name
+                description
+                defaultVariant {
+                  firstImage {
+                    url
+                    variants {
+                      url
+                      width
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        upNext {
+          items {
+            path
+            resolvedItem {
+              ...storyContent
+            }
+          }
+        }
+        story {
+          title
+          body
+          images {
+            url
+            key
+            altText
+            caption
+            focalPoint
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment storyContent on story {
+  title
+  media {
+    image {
+      url
+      variants {
+        url
+        width
+        height
+      }
+    }
+    shoppableImage {
+      url
+      variants {
+        url
+        width
+        height
+      }
+    }
+    video {
+      playlists
+      title
+      thumbnails {
+        url
+        key
+        altText
+        caption
+        focalPoint
+      }
+    }
+  }
+}
