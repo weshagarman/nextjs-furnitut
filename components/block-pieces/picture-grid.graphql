@@ -1,0 +1,13 @@
+#import "./../block-fragments/image.graphql"
+#import "./../block-fragments/layout.graphql"
+
+fragment pictureGrid on PictureGridPiece {
+  title
+  description
+  images {
+    ...image
+  }
+  layout {
+    ...layout
+  }
+}

@@ -1,4 +1,5 @@
 import { Image as CrystallizeImage } from "@crystallize/reactjs-components";
+import classNames from "classnames";
 
 export const Image = ({
   className,
@@ -11,14 +12,20 @@ export const Image = ({
   preserveRatio?: boolean;
 }) => {
   const styles = {
-    "--focus-x": focalPoint?.[0], // This is focalPoint X
-    "--focus-y": focalPoint?.[1], //This is focalPoint Y
+    "--focus-x": focalPoint?.x,
+    "--focus-y": focalPoint?.y,
     aspectRatio: preserveRatio
-      ? `${image?.variants?.[0].width}/${image?.variants?.[0].height}`
+      ? `${image?.variants?.[0].width || "auto"}/${image?.variants?.[0].height}`
       : "auto",
   } as React.CSSProperties;
+
   return (
-    <div className={`${className} crystallize-image`} style={styles}>
+    <div
+      className={classNames(`${className || ""} `, {
+        "crystallize-image": !preserveRatio,
+      })}
+      style={styles}
+    >
       <CrystallizeImage {...image} alt={image?.altText} />
     </div>
   );

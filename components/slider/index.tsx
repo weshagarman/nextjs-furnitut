@@ -30,7 +30,7 @@ export const Slider = ({
 
   return (
     <section className="embla w-full relative " style={style}>
-      <div className="embla__viewport mx-10" ref={emblaRef}>
+      <div className="embla__viewport " ref={emblaRef}>
         <div className="embla__container ">
           {Array.isArray(children) ? (
             <>

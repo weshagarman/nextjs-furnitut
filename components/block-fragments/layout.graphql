@@ -1,0 +1,22 @@
+#import "./image.graphql"
+
+fragment layout on LayoutPiece {
+  displayWidth
+  theme
+  backgroundMedia {
+    image {
+      ...image
+    }
+    video {
+      playlists
+      thumbnails {
+        url
+        altText
+        caption
+        meta
+        focalPoint
+        createAt
+      }
+    }
+  }
+}

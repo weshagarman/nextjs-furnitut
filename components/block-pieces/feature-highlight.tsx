@@ -4,7 +4,7 @@ export const FeatureHighlight = ({ block }: { block: any }) => {
   if (block === null) return null;
   const { usp } = block;
   return (
-    <div className="flex justify-between py-8 gap-8">
+    <div className="flex justify-between py-24 gap-8">
       {usp.map((feature: any, index: number) => {
         const { headline, description, icon } = feature;
         const image = icon?.[0];

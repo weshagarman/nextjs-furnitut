@@ -1,3 +1,8 @@
+#import "./../components/block-pieces/banner.graphql"
+#import "./../components/block-pieces/story-slider.graphql"
+#import "./../components/block-pieces/product-slider.graphql"
+#import "./../components/block-pieces/picture-grid.graphql"
+#import "./../components/block-pieces/feature-highlight.graphql"
 query FetchLandingPage {
   browse {
     landingPage(path: "/index") {
@@ -20,134 +25,6 @@ query FetchLandingPage {
             ...pictureGrid
           }
         }
-      }
-    }
-  }
-}
-
-fragment banner on BannerPiece {
-  title
-  description
-  layout {
-    ...layout
-  }
-  banner {
-    ...image
-  }
-  callToAction {
-    action {
-      label
-      url
-    }
-  }
-}
-
-fragment featureHighlights on FeatureHighlightsPiece {
-  layout {
-    ...layout
-  }
-  usp {
-    headline
-    description
-    icon {
-      ...image
-    }
-  }
-}
-
-fragment productSlider on ProductSliderPiece {
-  title
-  description
-  products(resolve: true) {
-    skus
-    items {
-      itemId
-    }
-  }
-  layout {
-    ...layout
-  }
-}
-
-fragment storySlider on StorySliderPiece {
-  title
-  description
-  stories {
-    items {
-      resolvedItem {
-        ... on story {
-          path
-          title
-          intro
-          media {
-            image {
-              ...image
-            }
-            shoppableImage {
-              ...image
-            }
-            video {
-              thumbnails {
-                url
-                altText
-                variants {
-                  width
-                  height
-                  url
-                }
-              }
-              title
-              playlists
-            }
-          }
-        }
-      }
-    }
-  }
-  layout {
-    ...layout
-  }
-}
-
-fragment pictureGrid on PictureGridPiece {
-  title
-  description
-  images {
-    ...image
-  }
-  layout {
-    ...layout
-  }
-}
-
-fragment image on Image {
-  url
-  altText
-  focalPoint
-  variants {
-    url
-    width
-    height
-  }
-}
-
-fragment layout on LayoutPiece {
-  displayWidth
-  theme
-  backgroundMedia {
-    image {
-      ...image
-    }
-    video {
-      id
-      playlists
-      thumbnails {
-        url
-        altText
-        caption
-        meta
-        focalPoint
-        createAt
       }
     }
   }

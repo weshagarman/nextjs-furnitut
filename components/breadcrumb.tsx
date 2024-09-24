@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import classNames from "classnames";
 interface Breadcrumb {
   name: string;
   path: string;
@@ -7,14 +7,20 @@ interface Breadcrumb {
 }
 export const Breadcrumb = ({
   breadcrumbs,
+  center = false,
 }: {
   breadcrumbs?: Breadcrumb[] | null | undefined;
+  center?: boolean;
 }) => {
   if (breadcrumbs?.length === 0) {
     return null;
   }
   return (
-    <div className="flex gap-3 items-center font-medium text-dark">
+    <div
+      className={classNames("flex gap-3 items-center font-medium text-dark ", {
+        "justify-center": center,
+      })}
+    >
       <Link href="/">
         <svg
           width="24"

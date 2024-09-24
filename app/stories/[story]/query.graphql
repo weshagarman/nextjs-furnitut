@@ -9,21 +9,21 @@ query FetchStory($path: String!) {
           id
         }
         featured {
-          skus
+          variants {
+            sku
+          }
           items {
             path
-            resolvedItem {
-              ... on product {
-                name
-                description
-                defaultVariant {
-                  firstImage {
+            ... on product {
+              name
+              description
+              defaultVariant {
+                firstImage {
+                  url
+                  variants {
                     url
-                    variants {
-                      url
-                      width
-                      height
-                    }
+                    width
+                    height
                   }
                 }
               }
@@ -33,9 +33,7 @@ query FetchStory($path: String!) {
         upNext {
           items {
             path
-            resolvedItem {
-              ...storyContent
-            }
+            ...storyContent
           }
         }
         story {

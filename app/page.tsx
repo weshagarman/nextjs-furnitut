@@ -23,7 +23,7 @@ export default async function LandingPage() {
   const { blocks } = await fetchLandingPage(FetchLandingPageDocument);
   return (
     <main className="flex min-h-screen flex-col items-center">
-      <Blocks blocks={blocks || []} />
+      <Blocks blocks={blocks || []} paddingFirstBlock={true} />
     </main>
   );
 }

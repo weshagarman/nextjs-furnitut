@@ -8,6 +8,7 @@ const config: Config = {
   ],
   theme: {
     colors: {
+      transparent: "transparent",
       dark: "#211A1D",
       light: "#ffffff",
       accent: "#89856C",

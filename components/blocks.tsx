@@ -4,7 +4,7 @@ import { PictureGrid } from "./block-pieces/picture-grid";
 import { ProductSlider } from "./block-pieces/product-slider";
 import { StorySlider } from "./block-pieces/story-slider";
 import { BlockLayout } from "./block-fragments/layout";
-const BlockType = ({ selectedBlock }) => {
+const BlockType = ({ selectedBlock }: { selectedBlock: any }) => {
   if (selectedBlock === null) return null;
 
   if ("banner" in selectedBlock)
@@ -31,14 +31,20 @@ const BlockType = ({ selectedBlock }) => {
   }
 };
 
-export const Blocks = ({ blocks }: { blocks: any[] }) => {
+export const Blocks = ({
+  blocks,
+  paddingFirstBlock = false,
+}: {
+  blocks: any[];
+  paddingFirstBlock?: boolean;
+}) => {
   return (
     <>
       {blocks.map((block, index) => {
         const selectedBlock = Object.fromEntries(
           Object.entries(block).filter(([, value]) => value !== null)
         );
-        const isFirstBlock = index === 0;
+        const isFirstBlock = paddingFirstBlock ? index === 0 : false;
         return (
           <div className="w-full block" key={`block-renderer-${index}`}>
             <BlockLayout

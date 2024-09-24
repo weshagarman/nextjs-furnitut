@@ -6,15 +6,17 @@ export const StorySlider = ({ block }: { block: any }) => {
   const { stories } = block;
 
   return (
-    <div className="flex-col flex items-center  mx-auto py-24">
+    <div className="flex-col flex items-center  mx-auto">
       <Typography {...block} />
-      <div className="w-full py-12 ">
-        <Slider options={{ loop: true, align: "start" }} type="story">
-          {stories.items.map((item: any) => (
-            <Story story={item.resolvedItem} />
-          ))}
-        </Slider>
-      </div>
+      {[...stories.items].length > 1 && (
+        <div className="w-full pb-24 ">
+          <Slider options={{ loop: true, align: "start" }} type="story">
+            {stories.items.map((item: any) => (
+              <Story story={item} />
+            ))}
+          </Slider>
+        </div>
+      )}
     </div>
   );
 };

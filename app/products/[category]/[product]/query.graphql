@@ -24,29 +24,27 @@ query FetchProduct($path: String!) {
         }
         relatedProducts {
           items {
-            resolvedItem {
-              ... on product {
-                path
-                name
-                variants {
-                  firstImage {
+            ... on product {
+              path
+              name
+              variants {
+                firstImage {
+                  url
+                  variants(types: ["avif"], maxWidth: 100) {
                     url
-                    variants(types: ["avif"], maxWidth: 100) {
-                      url
-                      width
-                      height
-                    }
+                    width
+                    height
                   }
                 }
-                defaultVariant {
-                  defaultPrice
-                  firstImage {
+              }
+              defaultVariant {
+                defaultPrice
+                firstImage {
+                  url
+                  variants(types: ["avif"], maxWidth: 500) {
                     url
-                    variants(types: ["avif"], maxWidth: 500) {
-                      url
-                      width
-                      height
-                    }
+                    width
+                    height
                   }
                 }
               }

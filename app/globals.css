@@ -23,10 +23,11 @@
 
     @apply w-full h-full;
   }
-
-  .crystallize-image img {
+  .crystallize-image {
     --crop-focus-x: var(--focus-x, 0.5);
     --crop-focus-y: var(--focus-y, 0.5);
+  }
+  .crystallize-image img {
     --container-width: 100cqw;
     --container-height: 100cqh;
     --image-width: calc(var(--container-width) - 100%);
@@ -83,13 +84,13 @@
   }
 
   .theme-muted {
-    @apply bg-accent;
+    @apply bg-muted;
   }
   .theme-muted .block-title {
-    @apply text-light;
+    @apply text-dark;
   }
   .theme-muted .block-description p {
-    @apply text-light;
+    @apply text-dark;
   }
 
   .theme-pastel {
@@ -117,6 +118,9 @@
   }
   .theme-dark .block-description p {
     @apply text-light;
+  }
+  .theme-dark .block-btn {
+    @apply bg-light text-dark;
   }
   .embla {
     max-width: 100rem;

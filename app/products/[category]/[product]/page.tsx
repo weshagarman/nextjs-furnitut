@@ -219,7 +219,7 @@ export default async function Products({
 
           <Slider type="product" options={{ loop: false, align: "start" }}>
             {[...product?.relatedProducts.items].map((item, index) => {
-              return <Product product={item.resolvedItem} />;
+              return <Product product={item} />;
             })}
           </Slider>
         </div>

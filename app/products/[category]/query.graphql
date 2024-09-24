@@ -1,3 +1,5 @@
+#import "./../../../components/category-blocks.graphql"
+
 query FetchCategory($path: String!) {
   browse {
     category(path: $path) {
@@ -7,6 +9,9 @@ query FetchCategory($path: String!) {
           name
           path
           id
+        }
+        blocks {
+          ...blocks
         }
         children {
           hits {

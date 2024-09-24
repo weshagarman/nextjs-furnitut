@@ -11,35 +11,45 @@ export const BlockLayout = ({
   const { displayWidth, theme, backgroundMedia } = layout;
   const isFullWidth = "stretch" in displayWidth;
   const selectedTheme = Object.keys(theme)[0];
+  const hasBackgroundMedia = !!backgroundMedia;
 
   return (
     <div
       className={classNames(
-        `w-full mx-auto block pt-24  pb-24 block-bg`,
+        `w-full mx-auto block  block-bg relative`,
         {
-          "pt-48": isFirstBlock,
+          "pt-60": isFirstBlock,
         },
         {
           "max-w-full": isFullWidth,
         },
         {
-          "max-w-screen-2xl": !isFullWidth,
+          "max-w-screen-2xl rounded-2xl": !isFullWidth,
         },
 
-        { "theme-muted": selectedTheme === "muted" },
+        { "theme-muted px-4": selectedTheme === "muted" },
         {
-          "theme-pastel":
-            selectedTheme === "pastel" || selectedTheme === "plop",
+          "theme-pastel px-4": selectedTheme === "pastel",
         },
         { "theme-light": selectedTheme === "light" },
-        { "theme-dark": selectedTheme === "dark" }
+        { "theme-dark px-4": selectedTheme === "dark" },
+        { "pt-0  pb-0 ": !hasBackgroundMedia },
+        { "!bg-transparent ": hasBackgroundMedia }
       )}
     >
-      <div>{children}</div>
-      {backgroundMedia && (
-        <div className="pt-24">
-          <div className="rounded-2xl overflow-hidden relative">
-            <Media {...backgroundMedia} />
+      <div
+        className={classNames({
+          "z-10 w-full h-full flex items-center absolute": hasBackgroundMedia,
+        })}
+      >
+        {children}
+      </div>
+      {hasBackgroundMedia && (
+        <div
+          className={classNames("relative overflow-hidden rounded-2xl my-12")}
+        >
+          <div className="relative h-full w-full">
+            <Media {...backgroundMedia} imageProps={{ preserveRatio: true }} />
           </div>
         </div>
       )}

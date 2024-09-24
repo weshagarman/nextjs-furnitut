@@ -1,0 +1,23 @@
+#import "./block-pieces/banner.graphql"
+#import "./block-pieces/story-slider.graphql"
+#import "./block-pieces/product-slider.graphql"
+#import "./block-pieces/picture-grid.graphql"
+#import "./block-pieces/feature-highlight.graphql"
+
+fragment blocks on ComponentChoiceComponentForCategoryBlocks {
+  storySlider {
+    ...storySlider
+  }
+  banner {
+    ...banner
+  }
+  featureHighlights {
+    ...featureHighlights
+  }
+  productSlider {
+    ...productSlider
+  }
+  pictureGrid {
+    ...pictureGrid
+  }
+}
