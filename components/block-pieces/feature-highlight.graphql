@@ -1,0 +1,15 @@
+#import "./../block-fragments/image.graphql"
+#import "./../block-fragments/layout.graphql"
+
+fragment featureHighlights on FeatureHighlightsPiece {
+  layout {
+    ...layout
+  }
+  usp {
+    headline
+    description
+    icon {
+      ...image
+    }
+  }
+}

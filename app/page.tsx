@@ -1,17 +1,29 @@
-import Image from "next/image";
+import {
+  FetchLandingPageQuery,
+  FetchLandingPageDocument,
+} from "@/generated/graphql";
+import { apiRequest } from "@/utils/api-request";
+import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import { Blocks } from "@/components/blocks";
 
-export default function Home() {
+const fetchLandingPage = async <Result, Variables>(
+  query: TypedDocumentNode<Result, Variables>,
+  variables?: Variables
+) => {
+  const response = (await apiRequest(query, variables)) as {
+    data: FetchLandingPageQuery;
+  };
+
+  return {
+    blocks: response.data.browse?.landingPage?.hits?.[0]?.blocks,
+  };
+};
+
+export default async function LandingPage() {
+  const { blocks } = await fetchLandingPage(FetchLandingPageDocument);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full  after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3  sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          src="/furnitut.svg"
-          alt="Furnitut Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    <main className="flex min-h-screen flex-col items-center">
+      <Blocks blocks={blocks || []} paddingFirstBlock={true} />
     </main>
   );
 }

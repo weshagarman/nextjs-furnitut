@@ -1,0 +1,18 @@
+#import "./../block-fragments/image.graphql"
+#import "./../block-fragments/layout.graphql"
+
+fragment productSlider on ProductSliderPiece {
+  title
+  description
+  products {
+    variants {
+      sku
+    }
+    items {
+      itemId
+    }
+  }
+  layout {
+    ...layout
+  }
+}
