@@ -8,8 +8,7 @@ const Form = dynamic(() => import('@/components/checkout-form'), {
 export default async function Checkout() {
     const cartId = storage.getCartId();
     return (
-        <main className="page">
-            <h1 className="mb-5 text-2xl">Checkout</h1>
+        <main className="page !max-w-screen-xl">
             <Form cartId={cartId ?? ''} />
         </main>
     );

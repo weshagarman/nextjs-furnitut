@@ -12,7 +12,6 @@ import { storage } from '@/core/storage.server';
 import { fetchCart } from '@/use-cases/fetch-cart';
 import { Cart } from '@/use-cases/contracts/cart';
 import { SidebarCart } from '@/components/sidebar-cart';
-
 const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ const fetchLayout = async <Result, Variables>(query: TypedDocumentNode<Result, V
     const response = (await apiRequest(query, variables)) as {
         data: FetchLayoutQuery;
     };
-
     return {
         header: response.data.browse?.header?.hits?.[0]?.children?.hits,
         footer: null,

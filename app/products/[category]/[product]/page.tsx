@@ -6,6 +6,7 @@ import { apiRequest } from '@/utils/api-request';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { Price } from '@/components/price';
 import { Image } from '@/components/image';
+import { Image as CrystallizeImage } from '@crystallize/reactjs-components';
 import { VariantSelector, findSuitableVariant } from '@/components/variant-selector';
 import { Slider } from '@/components/slider';
 import { Product } from '@/components/product';
@@ -73,11 +74,10 @@ export default async function Products({
     const story = (product?.story ?? []).filter(
         (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
     );
-
     const currentVariant = findSuitableVariant(product?.variants, searchParams) ?? product?.variants?.[0];
 
+    const brand = product?.brand?.items?.[0];
     const { dimensions } = currentVariant;
-
     return (
         <>
             <main className="page">
@@ -89,12 +89,16 @@ export default async function Products({
                                 return (
                                     <div
                                         className={classNames(
-                                            'overflow-hidden rounded-2xl border border-muted bg-light',
+                                            'overflow-hidden rounded-2xl border border-muted bg-light relative',
                                             { 'col-span-2': index === 0 },
                                         )}
                                         key={index}
                                     >
-                                        <Image {...image} preserveRatio={true} />
+                                        <Image
+                                            {...image}
+                                            preserveRatio={true}
+                                            className="[&_img]:max-w-none [&_img]:w-full"
+                                        />
                                     </div>
                                 );
                             })}
@@ -156,11 +160,17 @@ export default async function Products({
                     </div>
 
                     <div className="col-span-5 relative">
-                        <div className="flex justify-between items-center opacity-50">
-                            <span className="text-xs font-bold">{currentVariant.sku}</span>
-                            <span>
-                                <b>HAY</b>
-                            </span>
+                        <div className="flex justify-between items-center ">
+                            <span className="text-xs font-bold opacity-50">{currentVariant.sku}</span>
+                            {brand && (
+                                <span className="w-16 h-10 relaive flex items-center">
+                                    {!!brand?.logo?.[0] ? (
+                                        <CrystallizeImage {...brand.logo?.[0]} className="object-contain" />
+                                    ) : (
+                                        brand.name
+                                    )}
+                                </span>
+                            )}
                         </div>
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">
@@ -179,7 +189,7 @@ export default async function Products({
                                 </div>
                             )}
                             <div className="text-2xl flex items-center font-bold py-4 justify-between w-full">
-                                <Price price={currentVariant?.defaultPrice} />
+                                <Price price={currentVariant?.priceVariants.default} />
 
                                 <AddToCartButton
                                     variantName={currentVariant.name || product?.name || 'Variant'}
@@ -239,7 +249,7 @@ export default async function Products({
                             '@type': 'Review',
                             reviewRating: {
                                 '@type': 'Rating',
-                                ratingValue: '4',
+                                ratingValue: '5',
                                 bestRating: '5',
                             },
                         },

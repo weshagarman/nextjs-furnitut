@@ -9,6 +9,27 @@ query FetchProduct($path: String!) {
                     name
                     path
                 }
+                brand {
+                    items {
+                        id
+                        name
+                        ... on brand {
+                            component_name
+                            logo {
+                                url
+                                variants(maxWidth: 200) {
+                                    url
+                                    height
+                                    width
+                                }
+                            }
+                        }
+                    }
+                }
+                details {
+                    title
+                    description
+                }
                 story {
                     title
                     body(format: json)

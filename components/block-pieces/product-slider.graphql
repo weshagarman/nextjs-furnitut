@@ -7,6 +7,19 @@ fragment productSlider on ProductSliderPiece {
     products {
         variants {
             sku
+            name
+            defaultPrice: priceVariants(key: "default")
+            firstImage {
+                url
+                variants(width: 500, types: ["avif"]) {
+                    url
+                    width
+                    height
+                }
+            }
+            product {
+                path
+            }
         }
         items {
             itemId

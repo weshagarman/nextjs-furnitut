@@ -22,7 +22,7 @@ query FetchCategory($path: String!) {
                             description(format: json)
                             defaultVariant {
                                 sku
-                                defaultPrice
+                                defaultPrice: priceVariants(key: "default")
                                 firstImage {
                                     url
                                     altText

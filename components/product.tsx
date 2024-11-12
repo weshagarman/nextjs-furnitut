@@ -1,9 +1,10 @@
 import { Image } from '@/components/image';
 import Link from 'next/link';
+import { Price } from './price';
 //@TODO types
 export const Product: React.FC<{ product: any }> = ({ product }) => {
-    const { name, path, description, defaultVariant, variants } = product;
-    const { firstImage, sku } = defaultVariant;
+    const { name, path, defaultVariant, variants } = product;
+    const { firstImage, defaultPrice } = defaultVariant;
     const totalVariants = variants?.length || 0;
     return (
         <Link
@@ -34,7 +35,9 @@ export const Product: React.FC<{ product: any }> = ({ product }) => {
             </div>
             <div className="flex flex-col px-2 py-2 pb-4 justify-start min-h-1/6 ">
                 <span className="">{name}</span>
-                <b>$2,999</b>
+                <b>
+                    <Price price={defaultPrice} />
+                </b>
             </div>
         </Link>
     );

@@ -45,13 +45,16 @@ export const Crystal = ({ cartId }: { cartId: string }) => {
     };
 
     return (
-        <button
-            type="button"
-            disabled={isPaying}
-            onClick={handleClick}
-            className="bg-dark text-light text-lg rounded-xl px-8 py-2 mt-5"
-        >
-            <span>{isPaying ? 'Processing payment' : 'Confrim payment using Crystal coin'}</span>
-        </button>
+        <div className="bg-soft mx-8 mt-4 rounded-lg px-6 py-4 flex gap-8 items-center ">
+            <p className="text-sm italic">Crystal coin is for testing purposes only, no real transaction will occur.</p>
+            <button
+                type="button"
+                disabled={isPaying}
+                onClick={handleClick}
+                className="bg-dark text-light font-medium rounded px-6 py-2 text-nowrap"
+            >
+                <span>{isPaying ? 'Processing payment' : 'Confirm payment'}</span>
+            </button>
+        </div>
     );
 };
