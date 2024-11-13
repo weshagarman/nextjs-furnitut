@@ -14,11 +14,10 @@ export const Slider = ({
     options: EmblaOptionsType;
     children?: React.ReactNode[] | React.ReactNode;
 }) => {
-    if (children === undefined) return null;
     const [emblaRef, emblaApi] = useEmblaCarousel(options);
-
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
+    if (children === undefined) return null;
     const style = {
         '--slide-size': type === 'story' ? '50%' : '25%',
     } as React.CSSProperties;

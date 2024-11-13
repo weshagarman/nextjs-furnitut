@@ -37,7 +37,7 @@ export default async function Products({
     const product = await fetchData(FetchProductDocument, {
         path: `/products/${params.category}/${params.product}`,
     });
-    const { details } = product;
+    const details = product?.details;
     const story = (product?.story ?? []).filter(
         (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
     );
