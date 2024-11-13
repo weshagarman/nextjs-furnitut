@@ -9,20 +9,22 @@ export const Media = ({
     shoppableImage,
     image,
     imageProps,
+    preserveRatio = false,
 }: {
     video?: any;
     shoppableImage?: any;
     image?: any;
     imageProps?: any;
+    preserveRatio?: boolean;
 }) => {
     if (video?.[0]) {
         return <Video {...video[0]} />;
     }
     if (shoppableImage) {
-        return <div>TODO: Shoppable Image </div>;
+        return <Image {...shoppableImage[0]} showShowcases={true} {...imageProps} preserveRatio={preserveRatio} />;
     }
     if (image?.[0]) {
-        return <Image {...image[0]} {...imageProps} />;
+        return <Image {...image[0]} {...imageProps} preserveRatio={preserveRatio} />;
     }
     return null;
 };

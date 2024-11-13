@@ -6,7 +6,6 @@ export const BlockLayout = ({ block, children }: { block: any; children: any }) 
     const isFullWidth = 'stretch' in displayWidth;
     const selectedTheme = Object.keys(theme)[0];
     const hasBackgroundMedia = !!backgroundMedia;
-
     return (
         <div
             className={classNames(
@@ -41,7 +40,7 @@ export const BlockLayout = ({ block, children }: { block: any; children: any }) 
             {hasBackgroundMedia && (
                 <div className={classNames('relative overflow-hidden rounded-2xl my-12')}>
                     <div className="relative h-full w-full">
-                        <Media {...backgroundMedia} imageProps={{ preserveRatio: true }} />
+                        <Media {...backgroundMedia} preserveRatio={true} shoppableImage={false} />
                     </div>
                 </div>
             )}

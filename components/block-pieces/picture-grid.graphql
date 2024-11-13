@@ -6,6 +6,40 @@ fragment pictureGrid on PictureGridPiece {
     description
     images {
         ...image
+        showcases {
+            hotspot
+            items {
+                name
+                ... on product {
+                    defaultVariant {
+                        defaultPrice: priceVariants(key: "default")
+                        firstImage {
+                            url
+                            variants(maxWidth: 200, types: ["avif"]) {
+                                width
+                                url
+                                height
+                            }
+                        }
+                    }
+                }
+            }
+            variants {
+                name
+                product {
+                    path
+                }
+                defaultPrice: priceVariants(key: "default")
+                firstImage {
+                    url
+                    variants(maxWidth: 200, types: ["avif"]) {
+                        width
+                        url
+                        height
+                    }
+                }
+            }
+        }
     }
     layout {
         ...layout

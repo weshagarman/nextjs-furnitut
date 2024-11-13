@@ -13,43 +13,9 @@ import { Product } from '@/components/product';
 import { Accordination } from '@/components/accordination';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
+import Link from 'next/link';
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants
-
-const details = [
-    {
-        title: 'Frame',
-        description: 'FSC-certified wooden frame in solid wood and plywood with elastic webbing. Legs with felt pads',
-    },
-    {
-        title: 'Cushions',
-        description:
-            'Inner cushions with 50% recycled PE fiber balls, and 50% recycled shredded foam, made from leftover material in production.',
-    },
-    {
-        title: 'Cover',
-        description: 'Removable covers in fabric or leather.',
-    },
-    {
-        title: 'Construction',
-        description:
-            'Wooden frame of solid wood and veneered side/back support with loose cushions consisting of 50% recycled fiberball from recycled PE and 50% shreaded foam.',
-    },
-    {
-        title: 'Country of origin',
-        description: 'Lithuania',
-    },
-    {
-        title: 'Warrenty',
-        description:
-            '5-year product warranty. Spare parts are available throughout the 5-year warranty period. Please contact the HAY sales team for further information about the warranty terms and conditions.',
-    },
-    {
-        title: 'Sustainability',
-        description:
-            'HAY focuses on developing long-lasting products that minimise our environmental impact. We optimise the use of sustainable materials such as recycled materials, FSC-certified wood and water-based lacquer, with a growing number of eco-certified products. We have strict regulatory requirements, and the majority of our products are tested to comply with international standards for strength, durability and safety.',
-    },
-];
 
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
     const response = (await apiRequest(query, variables)) as {
@@ -71,6 +37,7 @@ export default async function Products({
     const product = await fetchData(FetchProductDocument, {
         path: `/products/${params.category}/${params.product}`,
     });
+    const { details } = product;
     const story = (product?.story ?? []).filter(
         (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
     );
@@ -112,9 +79,11 @@ export default async function Products({
                         {details && (
                             <Accordination title="Details" defaultOpen={true} className="py-8">
                                 {details.map((detail, index) => (
-                                    <div className="grid grid-cols-4 gap-y-4 py-8 pr-24 text-lg" key={index}>
+                                    <div className="grid grid-cols-4 gap-y-4 py-8 pr-24 text-lg gap-4" key={index}>
                                         <span className="font-bold">{detail.title}</span>
-                                        <span className="col-span-3">{detail.description}</span>
+                                        <span className="col-span-3">
+                                            <ContentTransformer json={detail.description} />
+                                        </span>
                                     </div>
                                 ))}
                             </Accordination>
@@ -188,35 +157,84 @@ export default async function Products({
                                     />
                                 </div>
                             )}
-                            <div className="text-2xl flex items-center font-bold py-4 justify-between w-full">
-                                <Price price={currentVariant?.priceVariants.default} />
-
+                            <div className="text-4xl flex items-center font-bold py-4 justify-between w-full">
+                                <span>
+                                    <Price price={currentVariant?.priceVariants.default} />
+                                </span>
                                 <AddToCartButton
-                                    variantName={currentVariant.name || product?.name || 'Variant'}
-                                    productName={product?.name || 'Variant'}
-                                    sku={currentVariant.sku}
-                                    image={currentVariant.images?.[0]?.variants?.[0]}
-                                    quantity={1}
-                                    price={{
-                                        currency: 'EUR',
-                                        gross: currentVariant.price || 0,
-                                        net: currentVariant.price || 0,
-                                        taxAmount: 0,
-                                        discounts: [],
+                                    input={{
+                                        variantName: currentVariant.name || product?.name || 'Variant',
+                                        productName: product?.name || 'Variant',
+                                        sku: currentVariant.sku,
+                                        image: currentVariant.images?.[0]?.variants?.[0],
+                                        quantity: 1,
+                                        price: {
+                                            currency: currentVariant.defaultPrice?.currency || 'EUR',
+                                            gross: currentVariant.defaultPrice?.price || 0,
+                                            net: currentVariant.defaultPrice?.price || 0,
+                                            taxAmount: 0,
+                                            discounts: [],
+                                        },
                                     }}
                                 />
                             </div>
-                            <Accordination className="py-8 text-lg" title="Matching products (3)">
-                                Something something
-                            </Accordination>
+                            {currentVariant?.matchingProducts?.variants?.length > 0 && (
+                                <Accordination
+                                    className="py-8 text-lg"
+                                    title={`Matching products (${
+                                        currentVariant?.matchingProducts?.variants?.length || 0
+                                    })`}
+                                    defaultOpen={currentVariant?.matchingProducts?.variants?.length > 0}
+                                >
+                                    {currentVariant?.matchingProducts?.variants?.map((product, index) => {
+                                        return (
+                                            <div
+                                                className="flex gap-3 justify-between px-4 py-3 border items-center border-muted bg-light rounded-lg last:border-b-0"
+                                                key={`${product.sku}-featured-${index}`}
+                                            >
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-10 h-12 rounded overflow-hidden">
+                                                        <Image {...product.firstImage} />
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <Link href={product.product.path}>{product.name}</Link>
+                                                        <span className="text-sm font-bold">
+                                                            <Price price={product.defaultPrice} />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="justify-end">
+                                                    <AddToCartButton
+                                                        type="micro"
+                                                        input={{
+                                                            variantName: product.name || 'Variant',
+                                                            productName: product?.name || 'Variant',
+                                                            sku: product.sku,
+                                                            image: product.firstImage?.variants?.[0],
+                                                            quantity: 1,
+                                                            price: {
+                                                                currency: product.defaultPrice?.currency || 'EUR',
+                                                                gross: product.defaultPrice?.price || 0,
+                                                                net: currentVariant.price || 0,
+                                                                taxAmount: 0,
+                                                                discounts: [],
+                                                            },
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </Accordination>
+                            )}
                             <div className="border-muted border-t"></div>
                         </div>
                     </div>
                 </div>
             </main>
-            <div className="border-t border-muted mt-24">
-                <div className="px-0 max-w-screen-2xl pt-24  mx-auto ">
-                    <h2 className="text-2xl px-12 py-4 font-bold">Related products</h2>
+            <div className="mt-24">
+                <div className="px-0 border-t border-muted max-w-screen-2xl pt-24  mx-auto ">
+                    <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>
                         {[...product?.relatedProducts.items].map((item, index) => {

@@ -9,7 +9,7 @@ type GraphQLResponse<GraphQLData> =
           errors: GraphQLError[];
       };
 
-const apiEndpoint = `https://api-dev.crystallize.digital/${process.env.CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
+const apiEndpoint = `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_IDENTIFIER}/discovery`;
 
 export const apiRequest = async <Result, Variables>(
     query: TypedDocumentNode<Result, Variables>,

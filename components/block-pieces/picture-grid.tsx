@@ -19,7 +19,7 @@ export const PictureGrid = ({ block }: { block: any }) => {
                                 'col-span-2': index > 1,
                             })}
                         >
-                            <Image {...image} className="rounded-3xl overflow-hidden" />
+                            <Image {...image} className="rounded-3xl overflow-hidden" showShowcases={true} />
                         </div>
                     ))}
                 </div>

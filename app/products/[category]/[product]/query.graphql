@@ -36,6 +36,9 @@ query FetchProduct($path: String!) {
                     images {
                         key
                         url
+                        showcases {
+                            ...showcases
+                        }
                         variants {
                             url
                             width
@@ -59,7 +62,7 @@ query FetchProduct($path: String!) {
                                 }
                             }
                             defaultVariant {
-                                defaultPrice
+                                defaultPrice: priceVariants(key: "default")
                                 firstImage {
                                     url
                                     variants(types: ["avif"], maxWidth: 500) {
@@ -77,8 +80,25 @@ query FetchProduct($path: String!) {
                     name
                     sku
                     priceVariants
-                    defaultPrice
                     attributes
+                    matchingProducts {
+                        variants {
+                            sku
+                            name
+                            product {
+                                path
+                            }
+                            defaultPrice: priceVariants(key: "default")
+                            firstImage {
+                                url
+                                variants(maxWidth: 200, types: ["avif"]) {
+                                    url
+                                    height
+                                    width
+                                }
+                            }
+                        }
+                    }
                     dimensions {
                         depth
                         depthUnit

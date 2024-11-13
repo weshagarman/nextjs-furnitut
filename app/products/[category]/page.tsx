@@ -8,7 +8,7 @@ const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Var
     const response = (await apiRequest(query, variables)) as {
         data: FetchCategoryQuery;
     };
-
+    console.log('response', response.data.browse?.category?.hits?.[0]?.blocks?.[0]?.banner.banner?.[0]);
     return response.data.browse?.category?.hits?.[0];
 };
 

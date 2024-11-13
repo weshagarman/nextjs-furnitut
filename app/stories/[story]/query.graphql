@@ -8,19 +8,19 @@ query FetchStory($path: String!) {
                     name
                     id
                 }
+                intro
                 featured {
-                    variants {
-                        sku
-                    }
                     items {
                         path
                         ... on product {
                             name
                             description
                             defaultVariant {
+                                sku
+                                defaultPrice: priceVariants(key: "default")
                                 firstImage {
                                     url
-                                    variants {
+                                    variants(maxWidth: 200, types: ["avif"]) {
                                         url
                                         width
                                         height
@@ -45,6 +45,11 @@ query FetchStory($path: String!) {
                         altText
                         caption
                         focalPoint
+                        variants(maxWidth: 1000, types: ["avif"]) {
+                            url
+                            width
+                            height
+                        }
                     }
                 }
             }
@@ -67,8 +72,12 @@ fragment storyContent on story {
             url
             variants {
                 url
+                key
                 width
                 height
+            }
+            showcases {
+                ...showcases
             }
         }
         video {
@@ -80,6 +89,41 @@ fragment storyContent on story {
                 altText
                 caption
                 focalPoint
+            }
+        }
+    }
+}
+
+fragment showcases on Showcase {
+    hotspot
+    items {
+        name
+        ... on product {
+            defaultVariant {
+                defaultPrice: priceVariants(key: "default")
+                firstImage {
+                    url
+                    variants(maxWidth: 200, types: ["avif"]) {
+                        width
+                        url
+                        height
+                    }
+                }
+            }
+        }
+    }
+    variants {
+        name
+        product {
+            path
+        }
+        defaultPrice: priceVariants(key: "default")
+        firstImage {
+            url
+            variants(maxWidth: 200, types: ["avif"]) {
+                width
+                url
+                height
             }
         }
     }

@@ -13,8 +13,13 @@ export const Banner = ({ block }: { block: any }) => {
         <div className="flex-col flex items-center max-w-screen-2xl mx-auto">
             <Typography {...block} />
             {image && (
-                <div className="mt-12 max-w-screen-xl w-full h-auto mb-24" style={styles}>
-                    <Image {...image} className="rounded-3xl overflow-hidden" preserveRatio={true} />
+                <div className="mt-12 max-w-screen-xl w-full h-auto mb-24 " style={styles}>
+                    <Image
+                        {...image}
+                        className="rounded-3xl overflow-hidden"
+                        preserveRatio={true}
+                        showShowcases={true}
+                    />
                 </div>
             )}
         </div>

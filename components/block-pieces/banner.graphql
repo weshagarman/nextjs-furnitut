@@ -8,7 +8,48 @@ fragment banner on BannerPiece {
         ...layout
     }
     banner {
-        ...image
+        url
+        altText
+        focalPoint
+        variants {
+            url
+            width
+            height
+        }
+        showcases {
+            hotspot
+            items {
+                name
+                ... on product {
+                    defaultVariant {
+                        defaultPrice: priceVariants(key: "default")
+                        firstImage {
+                            url
+                            variants(maxWidth: 200, types: ["avif"]) {
+                                width
+                                url
+                                height
+                            }
+                        }
+                    }
+                }
+            }
+            variants {
+                name
+                product {
+                    path
+                }
+                defaultPrice: priceVariants(key: "default")
+                firstImage {
+                    url
+                    variants(maxWidth: 200, types: ["avif"]) {
+                        width
+                        url
+                        height
+                    }
+                }
+            }
+        }
     }
     callToAction {
         action {
