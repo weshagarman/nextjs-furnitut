@@ -1,14 +1,14 @@
 'use client';
 
-import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
-import { Cart, CartItem } from '@/use-cases/contracts/cart';
 import { createContext, useContext, ReactNode, useState, use, useOptimistic } from 'react';
 import { useFormState } from 'react-dom';
+import { addToCartServerAction } from '@/app/actions/add-to-cart-action-server';
+import { Cart, CartItem } from '@/use-cases/contracts/cart';
 
 interface CartContextProps {
     cart: Cart | null;
     isLoading: boolean;
-    addToCartAction: (formData: FormData) => void;
+    addToCartAction: (formData: FormData, type?: 'remove' | 'add' | 'reduce') => void;
     isCartOpen: boolean;
     setIsCartOpen: (value: boolean) => void;
     emptyCart: () => void;
@@ -19,52 +19,75 @@ const CartContext = createContext<CartContextProps | undefined>(undefined);
 export const CartProvider = ({ children, cartPromise }: { children: ReactNode; cartPromise: Promise<Cart> }) => {
     const cart = use(cartPromise);
     const [formState, formAction, isPending] = useFormState(addToCartServerAction, cart);
-
-    const [optimisticCart, setOptimisticCart] = useOptimistic(formState);
+    const [optimisticCart, setOptimisticCart] = useOptimistic(cart);
     const [isCartOpen, setIsCartOpen] = useState(false);
 
-    const optimisticAddToCartAction = (formData: FormData) => {
+    const optimisticAddToCartAction = (formData: FormData, type?: 'remove' | 'add' | 'reduce') => {
         const input = JSON.parse(formData.get('input') as string);
-        setOptimisticCart((prevCart: Cart) => {
+
+        const updatedCart = (() => {
+            const prevCart = optimisticCart;
             const existingItemIndex = prevCart.items.findIndex((item) => item.variant.sku === input.sku);
 
-            // If the item exists, update the quantity
-            if (existingItemIndex !== -1) {
-                const updatedItems = prevCart.items.map((item, index) => {
-                    if (index === existingItemIndex) {
-                        return {
-                            ...item,
-                            quantity: item.quantity + 1,
-                        };
-                    }
-                    return item;
-                });
+            let updatedItems = [...prevCart.items];
 
-                return { ...prevCart, items: updatedItems };
+            if (existingItemIndex !== -1) {
+                switch (type) {
+                    case 'remove':
+                        updatedItems = updatedItems.filter((item) => item.variant.sku !== input.sku);
+                        break;
+
+                    case 'reduce':
+                        const item = updatedItems[existingItemIndex];
+                        const newQuantity = Math.max(0, item.quantity - 1);
+                        if (newQuantity === 0) {
+                            updatedItems = updatedItems.filter((item) => item.variant.sku !== input.sku);
+                        } else {
+                            updatedItems[existingItemIndex] = { ...item, quantity: newQuantity };
+                        }
+                        break;
+
+                    case 'add':
+                    default:
+                        updatedItems[existingItemIndex] = {
+                            ...updatedItems[existingItemIndex],
+                            quantity: updatedItems[existingItemIndex].quantity + 1,
+                        };
+                        break;
+                }
+            } else {
+                const optimisticItem: CartItem = {
+                    name: input.variantName,
+                    images: input.image ? [input.image] : [],
+                    price: input.price,
+                    quantity: 1,
+                    variant: {
+                        sku: input.sku,
+                        name: input.variantName,
+                        price: input.price,
+                        product: {
+                            name: input.productName,
+                        },
+                    },
+                };
+                updatedItems = [...prevCart.items, optimisticItem];
             }
 
-            const optimisticItem: CartItem = {
-                name: input.variantName,
-                images: input.image ? [input.image] : [],
-                price: input.price,
-                quantity: 1,
-                variant: {
-                    sku: `optimistic-${input.sku}`,
-                    name: input.variantName,
-                    price: input.price,
-                    product: {
-                        name: input.productName,
-                    },
-                },
+            return {
+                ...prevCart,
+                items: updatedItems,
             };
-            return { ...prevCart, items: [...prevCart.items, optimisticItem] };
-        });
+        })();
 
-        formAction(formData);
+        setOptimisticCart(updatedCart);
+
+        const serverFormData = new FormData();
+        serverFormData.set('cart', JSON.stringify(updatedCart));
+        formAction(serverFormData);
     };
 
     const emptyCart = () => {
-        setOptimisticCart({
+        const emptyCartData: Cart = {
             items: [],
             total: {
                 currency: cart.total.currency,
@@ -73,13 +96,19 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
                 taxAmount: 0,
                 discounts: [],
             },
-        });
+        };
+
+        setOptimisticCart(emptyCartData);
+
+        const serverFormData = new FormData();
+        serverFormData.set('cart', JSON.stringify(emptyCartData));
+        formAction(serverFormData);
     };
 
     return (
         <CartContext.Provider
             value={{
-                cart: optimisticCart || cart,
+                cart: optimisticCart,
                 addToCartAction: optimisticAddToCartAction,
                 isLoading: isPending,
                 isCartOpen,

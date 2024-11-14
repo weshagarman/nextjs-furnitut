@@ -108,7 +108,7 @@ export const VariantSelector = ({
                     <div className="py-2">
                         <span className="font-bold text-base pb-2 block">{key}</span>
                         <div className="grid grid-cols-5 gap-1">
-                            {variantSelectorOptions[key].map((value, index) => {
+                            {variantSelectorOptions[key].map((value, index: number) => {
                                 return (
                                     <Link
                                         key={`attribute-variant-${index}`}

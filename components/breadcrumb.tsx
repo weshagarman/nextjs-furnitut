@@ -40,15 +40,19 @@ export const Breadcrumb = ({
             <span className="opacity-30"> / </span>
             {[...breadcrumbs].map((item: any, index: number) => {
                 if (index === breadcrumbs.length - 1) {
-                    return <span className="opacity-50">{item.name}</span>;
+                    return (
+                        <span className="opacity-50" key={index}>
+                            {item.name}
+                        </span>
+                    );
                 }
                 return (
-                    <>
-                        <div key={index}>
+                    <div key={index}>
+                        <div>
                             <Link href={item.path}>{item.name}</Link>
                         </div>
                         {index !== breadcrumbs.length - 1 && <span className="opacity-30"> / </span>}
-                    </>
+                    </div>
                 );
             })}
         </div>

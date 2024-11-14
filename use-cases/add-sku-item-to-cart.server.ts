@@ -1,52 +1,36 @@
 import { storage } from '@/core/storage.server';
 import { crystallizeClient } from '../core/crystallize-client.server';
 import { FETCH_CART, PRICE_FRAGMENT } from './fetch-cart';
+import { CartItemInput } from './contracts/cart';
+interface CartInput {
+    items: { sku: string; quantity: number }[];
+    id?: string;
+}
 
-export const addSkuItemToCart = async (cartId: string | undefined, sku: string, quantity: number) => {
-    if (!cartId) {
-        try {
-            const data = await crystallizeClient.shopCartApi(
-                `#graphql
-            mutation HYDRATE_CART($input: CartInput!){ hydrate(input: $input) { ${FETCH_CART} } }
-            ${PRICE_FRAGMENT}
-            `,
-                {
-                    input: {
-                        // context: cartContext,
-                        items: [
-                            {
-                                sku,
-                                quantity,
-                            },
-                        ],
-                    },
-                },
-            );
-            storage.setCartId(data.hydrate.id);
-            return data.hydrate;
-        } catch (exception) {
-            console.error('addSkuItemToCart without cartId', exception);
-            throw exception;
-        }
+export const hydrateCart = async (cartId: string | undefined, items: CartItemInput[]) => {
+    const input: CartInput = {
+        items: items.map((item) => ({
+            sku: item.sku,
+            quantity: item.quantity,
+        })),
+    };
+    if (cartId) {
+        input.id = cartId;
     }
-
     try {
         const data = await crystallizeClient.shopCartApi(
             `#graphql
-            mutation ADD_TO_CART($cartId: UUID!, $input: CartSkuItemInput!){ addSkuItem(id: $cartId, input: $input) { ${FETCH_CART} } }
+            mutation HYDRATE_CART($input: CartInput!){ hydrate(input: $input) { ${FETCH_CART} } }
             ${PRICE_FRAGMENT}
             `,
             {
-                cartId,
-                input: {
-                    sku,
-                    quantity,
-                },
+                input,
             },
         );
-        return data.addSkuItem;
+        storage.setCartId(data.hydrate.id);
+        return data.hydrate;
     } catch (exception) {
-        console.error('addSkuItemToCart with cartId', exception);
+        console.error('addSkuItemToCart without cartId', exception);
         throw exception;
     }
 };
