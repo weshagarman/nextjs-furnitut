@@ -47,7 +47,7 @@ export const Breadcrumb = ({
                     );
                 }
                 return (
-                    <>
+                    <div>
                         <div key={`breadcrumb-${index}`}>
                             <Link href={item.path}>{item.name}</Link>
                         </div>
