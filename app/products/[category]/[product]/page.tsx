@@ -14,6 +14,7 @@ import { Accordination } from '@/components/accordination';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 import Link from 'next/link';
+
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants
 
@@ -58,7 +59,12 @@ export default async function Products({
                                         key={index}
                                         {...image}
                                         preserveRatio={true}
-                                        className="overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full [&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full"
+                                        className={classNames(
+                                            'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full [&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
+                                            {
+                                                '!col-span-2': index === 0,
+                                            },
+                                        )}
                                         sizes={index > 0 ? '400px' : '800px'}
                                     />
                                 );
