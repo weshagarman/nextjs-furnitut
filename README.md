@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crystallize eCommerce Accelerator with Next.js
+
+This open-source eCommerce accelerator is designed to help you quickly launch an online store using [Crystallize](https://crystallize.com) as the backend, paired with a powerful, modern frontend built in Next.js.
+
+Explore the live demo here: [Furnitut.com](https://furnitut.com).
+
 
 ## Getting Started
 
