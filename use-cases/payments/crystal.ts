@@ -24,6 +24,7 @@ export const crystalPaymentHandler = async (cartId: string) => {
                 ],
             },
         });
+
         return orderCreatedConfirmation;
     } catch (error) {
         console.error(error);

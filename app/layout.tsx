@@ -62,7 +62,7 @@ export default async function RootLayout({
                     <Header navigation={layout.header} />
                     {children}
                     <SidebarCart />
-                    <Footer />
+                    <Footer navigation={layout.header} />
                 </CartProvider>
             </body>
         </html>
