@@ -5,6 +5,10 @@ query FetchProduct($path: String!) {
                 name
                 path
                 description(format: json)
+                details {
+                    title
+                    description
+                }
                 breadcrumbs(withShortcuts: false) {
                     name
                     path
@@ -26,10 +30,7 @@ query FetchProduct($path: String!) {
                         }
                     }
                 }
-                details {
-                    title
-                    description
-                }
+
                 story {
                     title
                     body(format: json)

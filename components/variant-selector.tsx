@@ -59,7 +59,6 @@ export const VariantSelector = ({
     if (!useAttributeSelector) {
         // Variants are not using attributes
         const currentSku = searchParams.sku;
-        console.log({ currentSku });
         return (
             <div className="py-2 flex gap-y-1 flex-col">
                 <span className="font-bold text-base pb-2 block">Variants</span>
@@ -105,7 +104,7 @@ export const VariantSelector = ({
             {Object.keys(variantSelectorOptions).map((key, facetIndex) => {
                 const searchValue = searchParams[key];
                 return (
-                    <div className="py-2">
+                    <div className="py-2" key={`${key}-${facetIndex}-selector`}>
                         <span className="font-bold text-base pb-2 block">{key}</span>
                         <div className="grid grid-cols-5 gap-1">
                             {variantSelectorOptions[key].map((value, index: number) => {

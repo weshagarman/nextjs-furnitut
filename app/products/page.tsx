@@ -29,6 +29,7 @@ export default async function Products() {
                     </Link>
                 ))}
             </div>
+            <div className="min-h-screen"></div>
         </main>
     );
 }

@@ -24,12 +24,7 @@ export const crystalPaymentHandler = async (cartId: string) => {
                 ],
             },
         });
-        if (orderCreatedConfirmation) {
-            const mailer = createMailer(process.env.MAILER_DSN as string);
-            await sendOrderConfirmation(orderCreatedConfirmation.id, {
-                mailer,
-            });
-        }
+
         return orderCreatedConfirmation;
     } catch (error) {
         console.error(error);

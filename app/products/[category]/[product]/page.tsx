@@ -14,6 +14,7 @@ import { Accordination } from '@/components/accordination';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 import Link from 'next/link';
+
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants
 
@@ -37,7 +38,7 @@ export default async function Products({
     const product = await fetchData(FetchProductDocument, {
         path: `/products/${params.category}/${params.product}`,
     });
-    const { details } = product;
+    const details = product?.details;
     const story = (product?.story ?? []).filter(
         (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
     );
@@ -51,22 +52,21 @@ export default async function Products({
                 <div className="grid grid-cols-12 gap-24 rounded-xl">
                     <div className="col-span-7">
                         <Breadcrumb breadcrumbs={product?.breadcrumbs[0]} />
-                        <div className="mt-6 grid grid-cols-2 mb-6 pb-6 ">
+                        <div className="mt-6 grid grid-cols-2 mb-6 pb-6 gap-4 [&_.img-landscape]:col-span-2">
                             {currentVariant?.images?.map((image, index: number) => {
                                 return (
-                                    <div
-                                        className={classNames(
-                                            'overflow-hidden rounded-2xl border border-muted bg-light relative',
-                                            { 'col-span-2': index === 0 },
-                                        )}
+                                    <Image
                                         key={index}
-                                    >
-                                        <Image
-                                            {...image}
-                                            preserveRatio={true}
-                                            className="[&_img]:max-w-none [&_img]:w-full"
-                                        />
-                                    </div>
+                                        {...image}
+                                        preserveRatio={true}
+                                        className={classNames(
+                                            'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full [&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
+                                            {
+                                                '!col-span-2': index === 0,
+                                            },
+                                        )}
+                                        sizes={index > 0 ? '400px' : '800px'}
+                                    />
                                 );
                             })}
                         </div>
@@ -232,8 +232,8 @@ export default async function Products({
                     </div>
                 </div>
             </main>
-            <div className="mt-24">
-                <div className="px-0 border-t border-muted max-w-screen-2xl pt-24  mx-auto ">
+            <div className="mt-24 border-t border-muted">
+                <div className="px-0  max-w-screen-2xl pt-24  mx-auto ">
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>

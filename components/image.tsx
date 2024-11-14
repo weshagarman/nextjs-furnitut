@@ -17,11 +17,15 @@ export const Image = ({
     const styles = {
         '--focus-x': focalPoint?.x,
         '--focus-y': focalPoint?.y,
-        aspectRatio: preserveRatio ? `${image?.variants?.[0].width || 'auto'}/${image?.variants?.[0].height}` : 'auto',
+        aspectRatio: preserveRatio
+            ? `${image?.variants?.[0]?.width || 'auto'}/${image?.variants?.[0]?.height}`
+            : 'auto',
     } as React.CSSProperties;
+
+    const orientation = image?.variants?.[0]?.width > image?.variants?.[0]?.height ? 'img-landscape' : 'img-portrait';
     return (
         <div
-            className={classNames(`${className || ''} `, {
+            className={classNames(`${orientation} ${className || ''} `, {
                 'crystallize-image': !preserveRatio,
                 relative: showShowcases,
             })}
