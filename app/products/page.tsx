@@ -4,6 +4,8 @@ import { FetchAllCategoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import Link from 'next/link';
+export const revalidate = 4;
+
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>) => {
     const response = (await apiRequest(query)) as {
         data: FetchAllCategoriesQuery;

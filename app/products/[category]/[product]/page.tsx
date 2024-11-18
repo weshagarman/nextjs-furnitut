@@ -14,6 +14,7 @@ import { Accordination } from '@/components/accordination';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 import Link from 'next/link';
+export const revalidate = 4;
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants

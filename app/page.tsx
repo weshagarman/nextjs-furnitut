@@ -3,6 +3,7 @@ import { apiRequest } from '@/utils/api-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { Blocks } from '@/components/blocks';
 
+export const revalidate = 4;
 const fetchLandingPage = async <Result, Variables>(
     query: TypedDocumentNode<Result, Variables>,
     variables?: Variables,

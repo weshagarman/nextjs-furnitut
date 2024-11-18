@@ -4,6 +4,8 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { Product } from '@/components/product';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { Blocks } from '@/components/blocks';
+export const revalidate = 4;
+
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
     const response = (await apiRequest(query, variables)) as {
         data: FetchCategoryQuery;
