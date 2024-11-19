@@ -113,6 +113,20 @@
     .theme-dark .block-btn {
         @apply bg-light text-dark;
     }
+
+    .theme-vivid {
+        @apply bg-vivid;
+    }
+    .theme-vivid .block-title {
+        @apply text-dark;
+    }
+    .theme-vivid .block-description p {
+        @apply text-dark;
+    }
+    .theme-vivid .block-btn {
+        @apply bg-dark text-light;
+    }
+
     .embla {
         max-width: 100rem;
         margin: auto;

@@ -17,7 +17,7 @@ export const Breadcrumb = ({
     }
     return (
         <div
-            className={classNames('flex gap-3 items-center font-medium text-dark ', {
+            className={classNames('flex gap-3 items-center font-medium text-dark', {
                 'justify-center': center,
             })}
         >
@@ -47,12 +47,12 @@ export const Breadcrumb = ({
                     );
                 }
                 return (
-                    <div>
+                    <>
                         <div key={`breadcrumb-${index}`}>
                             <Link href={item.path}>{item.name}</Link>
                         </div>
                         {index !== breadcrumbs.length - 1 && <span className="opacity-30"> / </span>}
-                    </div>
+                    </>
                 );
             })}
         </div>

@@ -4,6 +4,8 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { Product } from '@/components/product';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { Blocks } from '@/components/blocks';
+import classnames from 'classnames';
+
 export const revalidate = 4;
 
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
@@ -26,15 +28,19 @@ export default async function Products({
     const breadcrumbs = category?.breadcrumbs?.[0];
     const blocks = category?.blocks;
     return (
-        <main className="pt-32">
-            <div className="max-w-screen-2xl mx-auto border-b border-muted pb-2 mb-2 ">
+        <main>
+            <div className="page  pb-6">
                 {breadcrumbs && <Breadcrumb breadcrumbs={breadcrumbs} />}
                 <h1 className="text-4xl font-bold py-4">{category?.name}</h1>
             </div>
-            <div className="flex flex-col items-center">
+            <div
+                className={classnames('flex flex-col items-center pt-12', {
+                    'pb-12': blocks?.length !== 0,
+                })}
+            >
                 <Blocks blocks={blocks || []} />
             </div>
-            <div className="grid grid-cols-4 gap-2 max-w-screen-2xl mx-auto pt-12 border-t border-muted">
+            <div className={classnames('grid grid-cols-4 gap-2 max-w-screen-2xl mx-auto')}>
                 {category?.children?.hits?.map(
                     (child) => child?.__typename === 'product' && <Product key={child?.path} product={child} />,
                 )}

@@ -17,15 +17,19 @@ export const BlockLayout = ({ block, children }: { block: any; children: any }) 
                     'max-w-full': isFullWidth,
                 },
                 {
-                    'max-w-screen-2xl rounded-2xl': !isFullWidth,
+                    'max-w-screen-2xl rounded-2xl ': !isFullWidth,
                 },
 
                 { 'theme-muted px-4': selectedTheme === 'muted' },
                 {
                     'theme-pastel px-4': selectedTheme === 'pastel',
                 },
+                {
+                    'theme-vivid px-4': selectedTheme === 'vivid',
+                },
                 { 'theme-light': selectedTheme === 'light' },
                 { 'theme-dark px-4': selectedTheme === 'dark' },
+
                 { 'pt-0  pb-0 ': !hasBackgroundMedia },
                 { '!bg-transparent ': hasBackgroundMedia },
             )}

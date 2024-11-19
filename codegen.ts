@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-    schema: 'https://api-dev.crystallize.digital/furnitut/discovery',
+    schema: 'https://api.crystallize.com/furnitut/discovery',
     documents: ['app/**/*.graphql', 'components/**/*.graphql'],
     ignoreNoDocuments: true,
     overwrite: true,

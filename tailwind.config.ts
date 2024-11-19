@@ -11,9 +11,10 @@ const config: Config = {
             transparent: 'transparent',
             dark: '#211A1D',
             light: '#ffffff',
+            soft: '#F6F4F3',
             accent: '#89856C',
             muted: '#dfdfdf',
-            soft: '#F6F4F3',
+            vivid: '#EE7674',
 
             //Crystallize
             // dark: "#403953",

@@ -19,15 +19,17 @@ export default async function Products() {
     const children = stories?.children.hits;
     const breadcrumbs = stories?.breadcrumbs?.[0];
     return (
-        <main className="page">
-            <div>
+        <main>
+            <div className="page pb-6">
                 {breadcrumbs && <Breadcrumb breadcrumbs={breadcrumbs} />}
                 <h1 className="text-4xl font-bold py-4">{stories?.title}</h1>
             </div>
-            <div className="grid grid-cols-2 gap-4 items-stretch">
-                {children.map((story: any, index: number) => {
-                    return <Story story={story} key={index} />;
-                })}
+            <div className=" pt-12">
+                <div className="grid grid-cols-2 gap-4 items-stretch max-w-screen-2xl mx-auto ">
+                    {children.map((story: any, index: number) => {
+                        return <Story story={story} key={index} />;
+                    })}
+                </div>
             </div>
         </main>
     );

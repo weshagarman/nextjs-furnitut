@@ -3,7 +3,7 @@ export const Footer = ({ navigation }) => {
     const year = new Date().getFullYear();
     return (
         <footer className="mt-24 border-t border-muted px-12">
-            <div className="px-0  max-w-screen-2xl mx-auto pt-24 pb-12">
+            <div className="px-12  max-w-screen-2xl mx-auto pt-24 pb-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     <div>
                         <Link href="/">
@@ -39,7 +39,7 @@ export const Footer = ({ navigation }) => {
                     </div>
                 </div>
             </div>
-            <div className="px-0  max-w-screen-2xl mx-auto pt-24 pb-48">
+            <div className="px-12  max-w-screen-2xl mx-auto pt-24 pb-48">
                 This commerce site is built for demo purposes, no real shopping will happen here
             </div>
         </footer>
