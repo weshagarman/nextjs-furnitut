@@ -1,7 +1,9 @@
 'use server';
 
+import { crystallizeClient } from '@/core/crystallize-client.server';
 import { placeCart } from '@/use-cases/place-cart';
 import { setCartCustomer } from '@/use-cases/set-customer';
+import { createCustomerManager } from '@crystallize/js-api-client';
 
 export const setCustomerPlaceCart = async (formData: FormData): Promise<any> => {
     const cartId = formData.get('cartId') as string;
@@ -21,7 +23,22 @@ export const setCustomerPlaceCart = async (formData: FormData): Promise<any> => 
     const response = await setCartCustomer(cartId, customer).then(async () => {
         return await placeCart(cartId);
     });
+    const {
+        addresses: { email, ...addressWithoutEmail },
+        ...customerWithoutEmail
+    } = { ...customer, email: customer.identifier };
 
+    const crystallizeCustomer = {
+        ...customerWithoutEmail,
+        addresses: [addressWithoutEmail],
+    }
+    
+    try {
+      //@ts-expect-error enum type error
+      await createCustomerManager(crystallizeClient).create(crystallizeCustomer);
+    } catch (error) {
+      console.error('Error creating customer', error);
+    }
     return {
         response,
     };

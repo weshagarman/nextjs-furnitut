@@ -33,13 +33,8 @@ export const Crystal = ({ cartId }: { cartId: string }) => {
             body: JSON.stringify({ cartId }),
         });
         const response = await data.json();
-        emptyCart();
         if (response.id) {
-            router.push(`/order/${response.id}`);
-        }
-        emptyCart();
-
-        if (response.id) {
+            emptyCart();
             router.push(`/order/${response.id}`);
         }
     };
