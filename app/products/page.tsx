@@ -5,7 +5,6 @@ import { apiRequest } from '@/utils/api-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
-export const revalidate = 4;
 
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>) => {
     const response = (await apiRequest(query)) as {
@@ -14,6 +13,8 @@ const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Var
 
     return response.data.browse?.category?.hits?.[0];
 };
+
+export const revalidate = 4;
 
 export default async function Products() {
     const mainCategory = await fetchData(FetchAllCategoriesDocument);

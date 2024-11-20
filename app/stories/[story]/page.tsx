@@ -1,7 +1,7 @@
 import { FetchStoryDocument, FetchStoryQuery, Paragraph } from '@/generated/graphql';
+import { generateStoryStaticPages } from '@/utils/static-story-pages';
 import { apiRequest } from '@/utils/api-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { Product } from '@/components/product';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { Image } from '@/components/image';
 import { Media } from '@/components/media';
@@ -11,7 +11,6 @@ import { Slider } from '@/components/slider';
 import { Story } from '@/components/story';
 import { Price } from '@/components/price';
 import Link from 'next/link';
-import { AddToCartButton } from '@/components/add-to-cart-button';
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
     const response = (await apiRequest(query, variables)) as {
         data: FetchStoryQuery;
@@ -19,6 +18,10 @@ const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Var
 
     return response.data.browse?.story?.hits?.[0];
 };
+
+export const revalidate = 4;
+export const dynamicParams = true;
+export const generateStaticParams = generateStoryStaticPages;
 
 export default async function Products({
     params,
@@ -35,7 +38,6 @@ export default async function Products({
     const story = (article?.story ?? []).filter(
         (paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined,
     );
-    console.log({ featured });
     return (
         <main className="mt-40">
             <div className="max-w-screen-md mx-auto text-center mb-12">

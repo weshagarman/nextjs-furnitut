@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { apiRequest } from '@/utils/api-request';
+import { generateProductAndCategoryStaticPages } from '@/utils/static-category-pages';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { Price } from '@/components/price';
 import { Image } from '@/components/image';
@@ -14,10 +15,13 @@ import { Accordination } from '@/components/accordination';
 import { AddToCartButton } from '@/components/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 import Link from 'next/link';
-export const revalidate = 4;
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants
+
+export const revalidate = 4;
+export const dynamicParams = true;
+export const generateStaticParams = generateProductAndCategoryStaticPages;
 
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
     const response = (await apiRequest(query, variables)) as {
