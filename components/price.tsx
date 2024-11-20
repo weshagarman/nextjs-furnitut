@@ -4,6 +4,7 @@ interface Price {
 }
 
 export const Price = ({ price }: { price: Price }) => {
+    if (!price) return null;
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: price.currency || 'EUR',
