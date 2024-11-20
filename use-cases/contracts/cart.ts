@@ -28,6 +28,7 @@ export type CartItem = {
 
 export type Cart = {
     items: CartItem[];
+    lastItemAdded: CartItem[];
     total: Price;
 };
 

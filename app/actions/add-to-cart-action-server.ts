@@ -7,7 +7,6 @@ import { hydrateCart } from '@/use-cases/add-sku-item-to-cart.server';
 export async function addToCartServerAction(prevState: any, formData: FormData) {
     try {
         const currentCart = JSON.parse(formData.get('cart') as string);
-
         const cartId = storage.getCartId();
 
         const items: CartItemInput[] = currentCart.items.map((item: CartItem) => ({
@@ -16,7 +15,9 @@ export async function addToCartServerAction(prevState: any, formData: FormData) 
         }));
 
         const updatedCart = await hydrateCart(cartId, items);
-        return updatedCart;
+
+        const newCart = { ...updatedCart, lastItemAdded: currentCart.lastItemAdded };
+        return newCart;
     } catch (error) {
         console.error('Cart update failed:', error);
         return prevState;

@@ -14,7 +14,7 @@ interface CartContextProps {
     emptyCart: () => void;
 }
 
-const CartContext = createContext<CartContextProps | undefined>(undefined);
+export const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider = ({ children, cartPromise }: { children: ReactNode; cartPromise: Promise<Cart> }) => {
     const cart = use(cartPromise);
@@ -30,11 +30,14 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
             const existingItemIndex = prevCart.items.findIndex((item) => item.variant.sku === input.sku);
 
             let updatedItems = [...prevCart.items];
+            let lastItemAdded = [] as CartItem[];
 
             if (existingItemIndex !== -1) {
                 switch (type) {
                     case 'remove':
                         updatedItems = updatedItems.filter((item) => item.variant.sku !== input.sku);
+                        lastItemAdded = [];
+
                         break;
 
                     case 'reduce':
@@ -44,6 +47,7 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
                             updatedItems = updatedItems.filter((item) => item.variant.sku !== input.sku);
                         } else {
                             updatedItems[existingItemIndex] = { ...item, quantity: newQuantity };
+                            lastItemAdded = [];
                         }
                         break;
 
@@ -53,6 +57,8 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
                             ...updatedItems[existingItemIndex],
                             quantity: updatedItems[existingItemIndex].quantity + 1,
                         };
+                        lastItemAdded = [updatedItems[existingItemIndex]];
+
                         break;
                 }
             } else {
@@ -71,10 +77,12 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
                     },
                 };
                 updatedItems = [...prevCart.items, optimisticItem];
+                lastItemAdded = [optimisticItem];
             }
 
             return {
                 ...prevCart,
+                lastItemAdded,
                 items: updatedItems,
             };
         })();
@@ -89,6 +97,7 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
     const emptyCart = () => {
         const emptyCartData: Cart = {
             items: [],
+            lastItemAdded: [],
             total: {
                 currency: cart.total.currency,
                 gross: 0,
@@ -123,11 +132,13 @@ export const CartProvider = ({ children, cartPromise }: { children: ReactNode; c
 
 export const useCart = () => {
     const context = useContext(CartContext);
+
     if (context === undefined) {
         return {
             isLoading: true,
             cart: {
                 items: [],
+                lastItemAdded: [],
                 total: {
                     currency: 'EUR',
                     gross: 0,

@@ -3,10 +3,26 @@
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { Image } from '@/components/image';
+import { CartItem } from '@/use-cases/contracts/cart';
 
 export const Header = ({ navigation }: { navigation: any }) => {
     const { setIsCartOpen, cart, isCartOpen } = useCart();
     const currentPath = usePathname();
+    let lastItemAdded = cart?.lastItemAdded as CartItem[];
+    useEffect(() => {
+        if (lastItemAdded?.length < 1) {
+            return;
+        }
+        let timeout: ReturnType<typeof setTimeout>;
+
+        setTimeout(() => {
+            lastItemAdded = [];
+        }, 8000);
+
+        return () => clearTimeout(timeout);
+    }, []);
     if (currentPath === '/checkout')
         return (
             <header className=" fixed max-w-screen-2xl w-full px-10  top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-8">
@@ -63,8 +79,11 @@ export const Header = ({ navigation }: { navigation: any }) => {
                     </div>
                 </div>
 
-                <div className="flex items-stretch pr-4 ">
-                    <Link href="/" className="flex items-center font-bold border-x border-muted px-6 gap-2">
+                <div className="flex items-stretch  ">
+                    <Link
+                        href="/"
+                        className="flex items-center font-medium  border-x border-muted px-6 gap-2 hover:bg-muted/20 active:bg-muted/40"
+                    >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle
                                 cx="12.6046"
@@ -84,7 +103,7 @@ export const Header = ({ navigation }: { navigation: any }) => {
                         <span>Login</span>
                     </Link>
                     <button
-                        className="flex items-center font-bold px-6 gap-2"
+                        className="flex items-center font-medium px-6 gap-2 hover:bg-muted/20 active:bg-muted/40 rounded-r-full"
                         onClick={() => setIsCartOpen(!isCartOpen)}
                     >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,8 +129,38 @@ export const Header = ({ navigation }: { navigation: any }) => {
                             <circle cx="17" cy="20.4778" r="1" fill="#222222" />
                             <circle cx="9" cy="20.4778" r="1" fill="#222222" />
                         </svg>
-                        <span>Cart({cart?.items.length})</span>
+                        <span className="pr-8 relative flex items-start justify-center">
+                            Cart{' '}
+                            {cart && cart?.items.length > 0 && (
+                                <span className="text-sm absolute right-0 h-5 w-5 text-bold bg-vivid text-light rounded top-1/2 -translate-y-1/2">
+                                    {cart?.items.length}
+                                </span>
+                            )}
+                        </span>
                     </button>
+                    {lastItemAdded?.length > 0 && (
+                        <div className="starting:opacity-0 starting:translate-y-10 opacity-100 transition-all absolute border translate-y-4 border-muted top-full right-0 bg-light text-dark p-2 rounded-lg shadow">
+                            {lastItemAdded?.map((item: any, index: number) => (
+                                <div className="flex gap-2 items-center pr-6" key={`last-item-addedToCart-${index}`}>
+                                    <div className="w-8 h-8 relative overflow-hidden rounded border border-muted ">
+                                        <Image
+                                            {...item.images?.[0]}
+                                            alt={item.variant.product.name}
+                                            sizes="100px"
+                                            className="relative [&_img]:object-cover"
+                                            showShowcases={false}
+                                        />
+                                    </div>
+                                    <div className="flex gap-1">
+                                        <span className="text-sm italic font-bold text-dark ">
+                                            {item.variant.product.name}
+                                        </span>
+                                        <span className="text-sm text-dark ">added to cart</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

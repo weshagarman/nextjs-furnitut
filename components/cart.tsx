@@ -29,7 +29,7 @@ export const CartViewer = ({ cart }: { cart: Cart | null }) => {
                                 <span className="text-sm italic text-dark/70">{item.variant.sku}</span>
                             </div>
                             <div className="flex justify-between w-full">
-                                <div className="flex gap-4 items-center">
+                                <div className="flex items-center rounded-lg">
                                     <form action={(formData) => addToCartAction(formData, 'reduce')}>
                                         <input
                                             type="hidden"
@@ -44,7 +44,7 @@ export const CartViewer = ({ cart }: { cart: Cart | null }) => {
                                         />
                                         <button
                                             type="submit"
-                                            className="w-8 h-8 flex items-center justify-center border rounded"
+                                            className="w-8 h-8 flex items-center justify-center rounded hover:bg-muted/20 active:bg-muted/40"
                                             disabled={isLoading}
                                         >
                                             -
@@ -67,7 +67,7 @@ export const CartViewer = ({ cart }: { cart: Cart | null }) => {
                                         />
                                         <button
                                             type="submit"
-                                            className="w-8 h-8 flex items-center justify-center border rounded"
+                                            className="w-8 h-8 flex items-center justify-center  rounded hover:bg-muted/20 active:bg-muted/40"
                                             disabled={isLoading}
                                         >
                                             +

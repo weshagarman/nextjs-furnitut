@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
     content: [
@@ -24,7 +25,11 @@ const config: Config = {
             // soft: "#F7F6F9",
         },
     },
-    plugins: [],
+    plugins: [
+        plugin(function ({ addVariant }) {
+            addVariant('starting', '@starting-style');
+        }),
+    ],
 };
 export default config;
 // Neutral, light, vidid, mutedm, dark
