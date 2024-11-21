@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { apiRequest } from '@/utils/api-request';
-import { generateProductAndCategoryStaticPages } from '@/utils/static-category-pages';
+// import { generateProductAndCategoryStaticPages } from '@/utils/static-category-pages';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { Price } from '@/components/price';
 import { Image } from '@/components/image';
@@ -20,8 +20,8 @@ import Link from 'next/link';
 //https://developers.google.com/search/docs/appearance/structured-data/product-variants
 
 export const revalidate = 4;
-export const dynamicParams = true;
-export const generateStaticParams = generateProductAndCategoryStaticPages;
+// export const dynamicParams = true;
+// export const generateStaticParams = generateProductAndCategoryStaticPages;
 
 const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables: Variables) => {
     const response = (await apiRequest(query, variables)) as {

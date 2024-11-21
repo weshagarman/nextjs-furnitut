@@ -1,5 +1,5 @@
 import { FetchStoryDocument, FetchStoryQuery, Paragraph } from '@/generated/graphql';
-import { generateStoryStaticPages } from '@/utils/static-story-pages';
+// import { generateStoryStaticPages } from '@/utils/static-story-pages';
 import { apiRequest } from '@/utils/api-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { ContentTransformer } from '@crystallize/reactjs-components';
@@ -20,8 +20,8 @@ const fetchData = async <Result, Variables>(query: TypedDocumentNode<Result, Var
 };
 
 export const revalidate = 4;
-export const dynamicParams = true;
-export const generateStaticParams = generateStoryStaticPages;
+// export const dynamicParams = true;
+// export const generateStaticParams = generateStoryStaticPages;
 
 export default async function Products({
     params,
