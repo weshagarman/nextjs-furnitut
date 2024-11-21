@@ -155,16 +155,16 @@ export default async function OrdersPage({ searchParams }: { searchParams: { err
 
                     <div className="p-8 bg-light rounded-xl mt-2 border border-muted">
                         <p className="text-lg font-bold">
-                            {customer.customer.firstName} {customer.customer.lastName}
+                            {customer.customer?.firstName} {customer.customer?.lastName}
                         </p>
-                        <p>{customer.customer.email}</p>
+                        <p>{customer.customer?.email}</p>
                         <ul className="py-2">
-                            {customer.customer.addresses.map((address: any, index: number) => (
+                            {customer.customer.addresses?.map((address: any, index: number) => (
                                 <li key={index}>
-                                    <span className="block">{address.street},</span>
-                                    <span>{address.postalCode}</span>
-                                    <span>{address.city}</span>
-                                    <span className="block">{address.country}</span>
+                                    <span className="block">{address?.street},</span>
+                                    <span>{address?.postalCode}</span>
+                                    <span>{address?.city}</span>
+                                    <span className="block">{address?.country}</span>
                                 </li>
                             ))}
                         </ul>
