@@ -14,6 +14,7 @@ export const Story: React.FC<{ story: any }> = ({ story }) => {
                 <div className="rounded-xl overflow-hidden  h-full shrink border border-muted">
                     {media && (
                         <Media
+                            sizes="(max-width: 600px) 100vw, 600px"
                             {...{
                                 // We dont want to use shoppable images in the microformat
                                 image: media.image || media.shoppableImage,

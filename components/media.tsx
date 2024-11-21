@@ -10,21 +10,31 @@ export const Media = ({
     image,
     imageProps,
     preserveRatio = false,
+    sizes,
 }: {
     video?: any;
     shoppableImage?: any;
     image?: any;
     imageProps?: any;
     preserveRatio?: boolean;
+    sizes?: string;
 }) => {
     if (video?.[0]) {
-        return <Video {...video[0]} />;
+        return <Video {...video[0]} sizes={sizes} />;
     }
     if (shoppableImage) {
-        return <Image {...shoppableImage[0]} showShowcases={true} {...imageProps} preserveRatio={preserveRatio} />;
+        return (
+            <Image
+                {...shoppableImage[0]}
+                showShowcases={true}
+                sizes={sizes}
+                {...imageProps}
+                preserveRatio={preserveRatio}
+            />
+        );
     }
     if (image?.[0]) {
-        return <Image {...image[0]} {...imageProps} preserveRatio={preserveRatio} />;
+        return <Image {...image[0]} {...imageProps} sizes={sizes} preserveRatio={preserveRatio} />;
     }
     return null;
 };

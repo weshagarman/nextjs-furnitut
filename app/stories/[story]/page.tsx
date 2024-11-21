@@ -47,7 +47,7 @@ export default async function Products({
                 </div>
             </div>
             <div className="max-w-screen-xl mx-auto [&_img]:w-full [&_img]:max-w-none overflow-hidden rounded-2xl ">
-                <Media {...media} className="" preserveRatio={true} />
+                <Media {...media} className="" preserveRatio={true} sizes="(max-width: 600px) 100vw, 1280px" />
             </div>
             <div className="grid grid-cols-5 max-w-screen-xl mx-auto mt-24">
                 <div

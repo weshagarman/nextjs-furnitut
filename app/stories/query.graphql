@@ -19,7 +19,7 @@ query FetchAllStories {
                                 image {
                                     url
                                     altText
-                                    variants {
+                                    variants(maxWidth: 500, types: ["avif"]) {
                                         url
                                         width
                                         height
@@ -28,7 +28,7 @@ query FetchAllStories {
                                 shoppableImage {
                                     url
                                     altText
-                                    variants {
+                                    variants(maxWidth: 500, types: ["avif"]) {
                                         url
                                         width
                                         height
@@ -38,7 +38,7 @@ query FetchAllStories {
                                     thumbnails {
                                         url
                                         altText
-                                        variants {
+                                        variants(maxWidth: 500, types: ["avif"]) {
                                             url
                                             width
                                             height

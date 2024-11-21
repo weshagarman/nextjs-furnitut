@@ -81,7 +81,7 @@ export const Header = ({ navigation }: { navigation: any }) => {
 
                 <div className="flex items-stretch  ">
                     <Link
-                        href="/"
+                        href="/account"
                         className="flex items-center font-medium  border-x border-muted px-6 gap-2 hover:bg-muted/20 active:bg-muted/40"
                     >
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +100,7 @@ export const Header = ({ navigation }: { navigation: any }) => {
                                 strokeLinecap="round"
                             />
                         </svg>
-                        <span>Login</span>
+                        <span>Account</span>
                     </Link>
                     <button
                         className="flex items-center font-medium px-6 gap-2 hover:bg-muted/20 active:bg-muted/40 rounded-r-full"
