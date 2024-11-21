@@ -6,7 +6,6 @@ export function createMailer(dsn: string): Mailer {
     if (dsn.startsWith('sendgrid://')) {
         const key = dsn.split('://')[1];
         sendgrid.setApiKey(key);
-
         return (
             subject: string,
             to: string[] | string,
@@ -22,12 +21,6 @@ export function createMailer(dsn: string): Mailer {
                 subject,
                 html,
                 text,
-                trackingSettings: {
-                    clickTracking: {
-                        enable: false,
-                        enableText: false,
-                    },
-                },
             });
         };
     }
