@@ -20,6 +20,7 @@ fragment banner on BannerPiece {
             hotspot
             items {
                 name
+                path
                 ... on product {
                     defaultVariant {
                         defaultPrice: priceVariants(key: "default")

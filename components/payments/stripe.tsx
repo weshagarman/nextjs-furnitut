@@ -78,7 +78,7 @@ export const StripeCheckoutForm = ({ cartId }: { cartId: string }) => {
     };
 
     return (
-        <form id="checkout" onSubmit={handleSubmit} className="mt-5">
+        <form id="checkout" onSubmit={handleSubmit} className="px-12 py-12">
             <PaymentElement />
             <StripeButton paying={state.processing || !stripe || !elements} />
         </form>
