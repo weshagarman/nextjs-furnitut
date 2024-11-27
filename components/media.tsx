@@ -20,7 +20,7 @@ export const Media = ({
     sizes?: string;
 }) => {
     if (video?.[0]) {
-        return <Video {...video[0]} sizes={sizes} />;
+        return null;
     }
     if (shoppableImage) {
         return (

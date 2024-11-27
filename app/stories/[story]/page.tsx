@@ -30,9 +30,9 @@ export default async function Products({
         story: string;
     };
 }) {
-    const article = await fetchData(FetchStoryDocument, {
+    const article = (await fetchData(FetchStoryDocument, {
         path: `/stories/${params.story}`,
-    });
+    })) satisfies FetchStoryQuery['browse']['story']['hits'][0];
     const { title, intro, media, featured, upNext } = article;
 
     const story = (article?.story ?? []).filter(
@@ -40,9 +40,9 @@ export default async function Products({
     );
     return (
         <main className="mt-40">
-            <div className="max-w-screen-md mx-auto text-center mb-12">
+            <div className="max-w-screen-lg mx-auto text-center mb-12">
                 <h1 className="text-dark text-5xl font-medium py-4 text-balance">{title}</h1>
-                <div className="text-lg leading-8 font-medium text-dark">
+                <div className="text-lg  text-center mx-auto leading-8 font-medium text-dark">
                     <ContentTransformer json={intro} />
                 </div>
             </div>
@@ -75,22 +75,6 @@ export default async function Products({
                                             <span className="text-sm font-bold">
                                                 <Price price={product.defaultVariant.defaultPrice} />{' '}
                                             </span>
-                                        </div>
-                                        <div>
-                                            {/* <AddToCartButton
-                                    variantName={product.name || product?.name || 'Variant'}
-                                    productName={product?.name || 'Variant'}
-                                    sku={currentVariant.sku}
-                                    image={currentVariant.images?.[0]?.variants?.[0]}
-                                    quantity={1}
-                                    price={{
-                                        currency: 'EUR',
-                                        gross: currentVariant.price || 0,
-                                        net: currentVariant.price || 0,
-                                        taxAmount: 0,
-                                        discounts: [],
-                                    }}
-                                /> */}
                                         </div>
                                     </div>
                                 );
