@@ -4,49 +4,53 @@ import { PictureGrid } from './block-pieces/picture-grid';
 import { ProductSlider } from './block-pieces/product-slider';
 import { StorySlider } from './block-pieces/story-slider';
 import { BlockLayout } from './block-fragments/layout';
-const BlockType = ({ selectedBlock }: { selectedBlock: any }) => {
-    if (selectedBlock === null) return null;
+import type { CategoryBlocksFragment, LandingPageBlocksFragment } from '@/generated/graphql';
 
-    if ('banner' in selectedBlock) return <Banner block={{ ...selectedBlock.banner }} />;
-    if ('featureHighlights' in selectedBlock)
-        return (
-            <FeatureHighlight
-                block={{
-                    ...selectedBlock.featureHighlights,
-                }}
-            />
-        );
+type Block = CategoryBlocksFragment | LandingPageBlocksFragment;
 
-    if ('storySlider' in selectedBlock) return <StorySlider block={{ ...selectedBlock.storySlider }} />;
-
-    if ('pictureGrid' in selectedBlock) return <PictureGrid block={{ ...selectedBlock.pictureGrid }} />;
-
-    if ('productSlider' in selectedBlock) {
-        return <ProductSlider block={{ ...selectedBlock.productSlider }} />;
-    } else {
-        return null;
-    }
+type BlocksProps = {
+    blocks?: Array<Block | null> | null;
+    hasFirstBlockPadding?: boolean;
 };
 
-export const Blocks = ({ blocks, paddingFirstBlock = false }: { blocks: any[]; paddingFirstBlock?: boolean }) => {
-    return (
-        <>
-            {blocks.map((block, index) => {
-                const selectedBlock = Object.fromEntries(Object.entries(block).filter(([, value]) => value !== null));
-                const isFirstBlock = paddingFirstBlock ? index === 0 : false;
-                return (
-                    <div className="w-full block" key={`block-renderer-${index}`}>
-                        <BlockLayout
-                            block={{
-                                layout: Object.values(selectedBlock)[0]?.layout || {},
-                                isFirstBlock,
-                            }}
-                        >
-                            <BlockType selectedBlock={{ ...selectedBlock, isFirstBlock }} />
-                        </BlockLayout>
-                    </div>
-                );
-            })}
-        </>
-    );
+const BlockType = ({ block }: { block: Block }) => {
+    if ('banner' in block && block.banner) {
+        return <Banner block={block.banner} />;
+    }
+
+    if ('featureHighlights' in block && block.featureHighlights) {
+        return <FeatureHighlight block={block.featureHighlights} />;
+    }
+
+    if ('storySlider' in block && block.storySlider) {
+        return <StorySlider block={block.storySlider} />;
+    }
+
+    if ('pictureGrid' in block && block.pictureGrid) {
+        return <PictureGrid block={block.pictureGrid} />;
+    }
+
+    if ('productSlider' in block && block.productSlider) {
+        return <ProductSlider block={block.productSlider} />;
+    }
+
+    return null;
+};
+
+export const Blocks = ({ blocks, hasFirstBlockPadding }: BlocksProps) => {
+    return blocks?.map((block, index) => {
+        const filteredBlock = Object.entries(block ?? {}).filter(([, value]) => value !== null);
+        const selectedBlock = Object.fromEntries(filteredBlock) as Block;
+        const firstBlock = Object.values(selectedBlock)[0] as Block;
+        const layout = !!firstBlock && 'layout' in firstBlock ? firstBlock.layout : {};
+        const isFirstBlock = hasFirstBlockPadding ? index === 0 : false;
+
+        return (
+            <div key={index} className="w-full block">
+                <BlockLayout block={{ layout, isFirstBlock }}>
+                    <BlockType block={selectedBlock} />
+                </BlockLayout>
+            </div>
+        );
+    });
 };

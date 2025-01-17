@@ -3,15 +3,15 @@ import { Manrope } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { FetchLayoutQuery, FetchLayoutDocument } from '@/generated/graphql';
+import { FetchLayoutDocument, MenuItemFragment } from '@/generated/graphql';
 
 import { apiRequest } from '@/utils/api-request';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { CartProvider } from '@/context/cart-context';
 import { storage } from '@/core/storage.server';
 import { fetchCart } from '@/use-cases/fetch-cart';
 import { Cart } from '@/use-cases/contracts/cart';
 import { SidebarCart } from '@/components/sidebar-cart';
+
 const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,22 +19,25 @@ export const metadata: Metadata = {
     description: 'Furnitut is a boilerplate created by Crystallize using Next.js.',
 };
 
-const fetchLayout = async <Result, Variables>(query: TypedDocumentNode<Result, Variables>, variables?: Variables) => {
-    const response = (await apiRequest(query, variables)) as {
-        data: FetchLayoutQuery;
-    };
-    return {
-        header: response.data.browse?.header?.hits?.[0]?.children?.hits,
-        footer: null,
-    };
+const fetchLayout = async () => {
+    const response = await apiRequest(FetchLayoutDocument);
+
+    const navigation = (
+        response.data.browse?.header?.hits?.[0]?.children?.hits as MenuItemFragment[] | undefined
+    )?.reduce<{ href: string; name: string }[]>((acc, nav) => {
+        const link = !!nav && 'link' in nav ? nav.link : undefined;
+        const href = !!link ? link.url || link.item?.items?.[0]?.path : undefined;
+        !!href && acc.push({ href, name: nav.name ?? '' });
+        return acc;
+    }, []);
+
+    return { navigation };
 };
 
-export default async function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
-    const layout = await fetchLayout(FetchLayoutDocument);
+type LayoutProps = { children: React.ReactNode };
+
+export default async function Layout({ children }: LayoutProps) {
+    const { navigation } = await fetchLayout();
     const getMyCart = async () => {
         const cartId = storage.getCartId();
         const cart = cartId
@@ -50,6 +53,7 @@ export default async function RootLayout({
               };
         return cart as Cart;
     };
+
     return (
         <html lang="en">
             <head>
@@ -59,10 +63,10 @@ export default async function RootLayout({
             </head>
             <body className={`${manrope.className} bg-soft`}>
                 <CartProvider cartPromise={getMyCart()}>
-                    <Header navigation={layout.header} />
+                    <Header navigation={navigation} />
                     {children}
                     <SidebarCart />
-                    <Footer navigation={layout.header} />
+                    <Footer navigation={navigation} />
                 </CartProvider>
             </body>
         </html>
