@@ -411,11 +411,7 @@
                 "brand"
               ],
               "quickSelect": {
-                "folders": [
-                  {
-                    "folderId": "6708d56af394f4f5ded0d186"
-                  }
-                ]
+                "folders": []
               }
             }
           }
@@ -770,11 +766,7 @@
                 "story"
               ],
               "quickSelect": {
-                "folders": [
-                  {
-                    "folderId": "66d9a3d1a18da3ab8b77b02d"
-                  }
-                ]
+                "folders": []
               }
             }
           }
