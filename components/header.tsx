@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { CartButton } from './cart/cart-button';
 import { Navigation } from './navigation';
+import { MenuWrapper } from './menu-wrapper';
 
 export const Header = () => {
     return (
@@ -21,27 +22,9 @@ export const Header = () => {
                     </Link>
 
                     <Suspense fallback={null}>
-                        <div className="flex-1 sm:hidden flex justify-end items-center">
-                            <button className="p-4">
-                                <svg
-                                    className="block h-6 w-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                </svg>
-                                <span className="sr-only">Toggle menu</span>
-                            </button>
-                        </div>
-                        <Navigation className="hidden sm:flex gap-6 min-h-full text-base self-stretch items-stretch font-medium pl-8" />
+                        <MenuWrapper>
+                            <Navigation className="flex flex-col sm:flex-row  items-center gap-6 min-h-full text-base self-stretch  font-medium sm:pl-8" />
+                        </MenuWrapper>
                     </Suspense>
                 </div>
 
