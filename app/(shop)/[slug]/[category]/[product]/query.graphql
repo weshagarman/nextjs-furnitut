@@ -79,6 +79,10 @@ query FetchProduct($path: String!) {
                 variants {
                     ...productVariant
                 }
+
+                meta {
+                    ...metadata
+                }
             }
         }
     }

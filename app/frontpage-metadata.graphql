@@ -1,0 +1,23 @@
+query FrontPageMetadata {
+    browse {
+        landingPage(path:"/index") {
+            hits {
+                meta {
+                    ...metadata
+                }
+            }
+        }
+    }
+}
+
+fragment metadata on MetaPiece {
+    title
+    description
+    image {
+        url
+        key
+        altText
+        width
+        height
+    }
+}

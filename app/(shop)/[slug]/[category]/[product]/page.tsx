@@ -13,6 +13,7 @@ import { Product } from '@/components/product';
 import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
+import type { Metadata } from 'next';
 
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
@@ -21,17 +22,42 @@ type ProductsProps = {
 
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchProductDocument, { path });
-    const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
+    const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
     return {
         ...product,
         variants,
         brand: brand?.items?.[0],
         story: story?.filter((paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined),
-
         breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item),
+        meta,
     };
 };
+
+export async function generateMetadata(props: ProductsProps): Promise<Metadata> {
+    const params = await props.params;
+    const { meta } = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+
+    const title = meta?.title;
+    const description = meta?.description[0].textContent;
+    const image = meta?.image?.[0];
+
+
+    return {
+        title: `${title} | Furnitut`,
+        description,
+        openGraph: {
+            title: `${title} | Furnitut`,
+            description,
+            images: [{
+                url: image?.url ?? '',
+                alt: image?.altText ?? '',
+                height: image?.height ?? 0,
+                width: image?.width ?? 0,
+            }],
+        },
+    };
+}
 
 export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
