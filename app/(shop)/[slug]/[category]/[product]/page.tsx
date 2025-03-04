@@ -37,13 +37,18 @@ const fetchData = async (path: string) => {
 };
 
 export async function generateMetadata(props: ProductsProps): Promise<Metadata> {
+    const searchParams = await props.searchParams;
     const params = await props.params;
-    const { meta } = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+    const url = `/${params.slug}/${params.category}/${params.product}`;
+    const { meta, variants } = await fetchData(url);
+    const currentVariant = findSuitableVariant({ variants: variants, searchParams });
 
-    const title = meta?.title;
+    const title = currentVariant?.name ?? '';
     const description = meta?.description[0].textContent;
-    const image = meta?.image?.[0];
-
+    const image = currentVariant?.images?.[0];
+    const ogImage = image?.ogVariants?.[0];
+    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
+    const productUrl = new URL(url, baseUrl);
 
     return {
         title: `${title} | Furnitut`,
@@ -51,11 +56,12 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
         openGraph: {
             title: `${title} | Furnitut`,
             description,
+            url: encodeURI(`${productUrl}?Color=${currentVariant?.attributes?.Color}`),
             images: [{
-                url: image?.url ?? '',
+                url: ogImage?.url ?? '',
                 alt: image?.altText ?? '',
-                height: image?.height ?? 0,
-                width: image?.width ?? 0,
+                height: ogImage?.height ?? 0,
+                width: ogImage?.width ?? 0,
             }],
         },
     };
@@ -217,7 +223,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                         </div>
                         <div className="py-4 sticky top-20">
                             <h1 className="text-2xl font-bold">
-                                {product.name} {currentVariant?.name}
+                                {currentVariant?.name ?? product.name}
                             </h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
