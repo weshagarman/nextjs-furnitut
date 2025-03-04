@@ -79,6 +79,10 @@ query FetchProduct($path: String!) {
                 variants {
                     ...productVariant
                 }
+
+                meta {
+                    ...metadata
+                }
             }
         }
     }
@@ -90,7 +94,9 @@ fragment productVariant on ProductVariantForProduct {
     priceVariants
     attributes
     defaultPrice: priceVariants(key: "default")
-
+    description {
+        extraDescription
+    }
     matchingProducts {
         variants {
             sku

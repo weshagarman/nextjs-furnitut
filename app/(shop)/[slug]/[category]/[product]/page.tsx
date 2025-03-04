@@ -1,5 +1,7 @@
 import clsx from 'classnames';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import schemas from 'schema-dts';
 import { ContentTransformer } from '@crystallize/reactjs-components';
 
 import { FetchProductDocument, Paragraph } from '@/generated/graphql';
@@ -14,6 +16,7 @@ import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
+
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
     params: Promise<{ slug: string; category: string; product: string }>;
@@ -21,24 +24,102 @@ type ProductsProps = {
 
 const fetchData = async (path: string) => {
     const response = await apiRequest(FetchProductDocument, { path });
-    const { story, variants, brand, breadcrumbs, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
+    const { story, variants, brand, breadcrumbs, meta, ...product } = response.data.browse?.product?.hits?.[0] ?? {};
 
     return {
         ...product,
         variants,
         brand: brand?.items?.[0],
         story: story?.filter((paragraph): paragraph is Paragraph => paragraph !== null && paragraph !== undefined),
-
         breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item),
+        meta,
     };
 };
+
+export async function generateMetadata(props: ProductsProps): Promise<Metadata> {
+    const params = await props.params;
+    const { meta } = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+
+    const title = meta?.title;
+    const description = meta?.description[0].textContent;
+    const image = meta?.image?.[0];
+
+
+    return {
+        title: `${title} | Furnitut`,
+        description,
+        openGraph: {
+            title: `${title} | Furnitut`,
+            description,
+            images: [{
+                url: image?.url ?? '',
+                alt: image?.altText ?? '',
+                height: image?.height ?? 0,
+                width: image?.width ?? 0,
+            }],
+        },
+    };
+}
 
 export default async function CategoryProduct(props: ProductsProps) {
     const searchParams = await props.searchParams;
     const params = await props.params;
-    const product = await fetchData(`/${params.slug}/${params.category}/${params.product}`);
+    const url = `/${params.slug}/${params.category}/${params.product}`;
+    const product = await fetchData(url);
     const currentVariant = findSuitableVariant({ variants: product.variants, searchParams });
     const dimensions = currentVariant?.dimensions;
+    // TODO: this should be for how long the price will be valid
+    const TWO_DAYS_FROM_NOW = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+
+    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
+    const productUrl = new URL(url, baseUrl);
+
+    const productVariantsSchema = product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: variant?.name ?? '',
+        image: variant?.images?.[0]?.url ?? '',
+        description: variant?.description?.extraDescription ?? '',
+        url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
+        sku: variant?.sku ?? '',
+        color: variant?.attributes?.Color,
+        offers: {
+            '@type': 'Offer',
+            itemCondition: 'https://schema.org/NewCondition',
+            availability: 'https://schema.org/InStock',
+            price: variant?.defaultPrice.price ?? '',
+            priceCurrency: variant?.defaultPrice.currency ?? '',
+            priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
+        },
+    })) ?? [];
+
+    const productSchema: schemas.WithContext<schemas.ProductGroup> = {
+        '@context': 'https://schema.org',
+        '@type': 'ProductGroup',
+        name: product?.name ?? '',
+        description: product?.description?.[0]?.text,
+        url: productUrl.toString(),
+        variesBy: [
+            'https://schema.org/color',
+        ],
+        hasVariant: productVariantsSchema,
+        brand: {
+            '@type': 'Brand',
+            name: 'HAY',
+        },
+        review: [{
+            '@type': 'Review',
+            author: {
+                '@type': 'Person',
+                name: 'John Doe',
+            },
+            reviewRating: {
+                '@type': 'Rating',
+                ratingValue: '5',
+                bestRating: '5',
+            },
+        }],
+    };
 
     return (
         <>
@@ -246,31 +327,7 @@ export default async function CategoryProduct(props: ProductsProps) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org/',
-                        '@type': 'Product',
-                        name: product?.name,
-                        image: currentVariant?.images?.[0]?.url,
-                        description: product?.description?.[0]?.text,
-                        sku: currentVariant?.sku,
-                        offers: {
-                            '@type': 'Offer',
-                            price: currentVariant?.defaultPrice?.price,
-                            priceCurrency: currentVariant?.defaultPrice?.currency,
-                        },
-                        brand: {
-                            '@type': 'Brand',
-                            name: 'HAY',
-                        },
-                        review: {
-                            '@type': 'Review',
-                            reviewRating: {
-                                '@type': 'Rating',
-                                ratingValue: '5',
-                                bestRating: '5',
-                            },
-                        },
-                    }),
+                    __html: JSON.stringify(productSchema),
                 }}
             />
         </>
