@@ -88,7 +88,8 @@ export default async function CategoryProduct(props: ProductsProps) {
         description: variant?.description?.extraDescription ?? '',
         url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
         sku: variant?.sku ?? '',
-        color: variant?.attributes?.Color,
+        // TODO: Enable the color, to display the variant varies by the color.
+        // color: variant?.attributes?.Color,
         offers: {
             '@type': 'Offer',
             itemCondition: 'https://schema.org/NewCondition',
@@ -105,14 +106,17 @@ export default async function CategoryProduct(props: ProductsProps) {
         name: product?.name ?? '',
         description: product?.description?.[0]?.text,
         url: productUrl.toString(),
-        variesBy: [
-            'https://schema.org/color',
-        ],
+        // TODO: Enable the variesBy, to display by which the variants in the ProductGroup vary.
+        //  See: https://schema.org/variesBy
+        // variesBy: [
+        //     'https://schema.org/color',
+        // ],
         hasVariant: productVariantsSchema,
         brand: {
             '@type': 'Brand',
             name: 'HAY',
         },
+        // TODO: replace with actual reviews from users
         review: [{
             '@type': 'Review',
             author: {
