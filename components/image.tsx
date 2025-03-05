@@ -19,20 +19,20 @@ type ImageProps = {
     altText?: string | null;
     src?: string;
     url?: string | null;
-    loading?: 'eager' | 'lazy'
+    loading?: 'eager' | 'lazy';
 };
 
 export const Image = ({
-                          className,
-                          focalPoint,
-                          preserveRatio,
-                          showShowcases,
-                          altText,
-                          loading,
-                          ogVariants,
-                          sizes,
-                          ...image
-                      }: ImageProps) => {
+    className,
+    focalPoint,
+    preserveRatio,
+    showShowcases,
+    altText,
+    loading,
+    ogVariants,
+    sizes,
+    ...image
+}: ImageProps) => {
     const styles = {
         '--focus-x': focalPoint?.x,
         '--focus-y': focalPoint?.y,
@@ -110,8 +110,12 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
                 {product && (
                     <div className=" gap-4 flex w-full text-light py-2 pr-6 text-sm items-center">
                         <div className="w-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover">
-                            <CrystallizeImage {...image} alt={image?.altText} className="h-full w-full"
-                                              loading={'lazy'} />
+                            <CrystallizeImage
+                                {...image}
+                                alt={image?.altText}
+                                className="h-full w-full"
+                                loading={'lazy'}
+                            />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-1">
                             <span className="text-ellipsis text-nowrap w-full">{product.name}</span>

@@ -16,7 +16,6 @@ import { Accordion } from '@/components/accordion';
 import { AddToCartButton } from '@/components/cart/add-to-cart-button';
 import { ParagraphCollection } from '@/components/paragraph-collection';
 
-
 type ProductsProps = {
     searchParams: Promise<Record<string, string>>;
     params: Promise<{ slug: string; category: string; product: string }>;
@@ -57,12 +56,14 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
             title: `${title} | Furnitut`,
             description,
             url: encodeURI(`${productUrl}?Color=${currentVariant?.attributes?.Color}`),
-            images: [{
-                url: ogImage?.url ?? '',
-                alt: image?.altText ?? '',
-                height: ogImage?.height ?? 0,
-                width: ogImage?.width ?? 0,
-            }],
+            images: [
+                {
+                    url: ogImage?.url ?? '',
+                    alt: image?.altText ?? '',
+                    height: ogImage?.height ?? 0,
+                    width: ogImage?.width ?? 0,
+                },
+            ],
         },
     };
 }
@@ -80,25 +81,26 @@ export default async function CategoryProduct(props: ProductsProps) {
     const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
     const productUrl = new URL(url, baseUrl);
 
-    const productVariantsSchema = product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: variant?.name ?? '',
-        image: variant?.images?.[0]?.url ?? '',
-        description: variant?.description?.extraDescription ?? '',
-        url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
-        sku: variant?.sku ?? '',
-        // TODO: Enable the color, to display the variant varies by the color.
-        // color: variant?.attributes?.Color,
-        offers: {
-            '@type': 'Offer',
-            itemCondition: 'https://schema.org/NewCondition',
-            availability: 'https://schema.org/InStock',
-            price: variant?.defaultPrice.price ?? '',
-            priceCurrency: variant?.defaultPrice.currency ?? '',
-            priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
-        },
-    })) ?? [];
+    const productVariantsSchema =
+        product.variants?.map<schemas.WithContext<schemas.Product>>((variant) => ({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: variant?.name ?? '',
+            image: variant?.images?.[0]?.url ?? '',
+            description: variant?.description?.extraDescription ?? '',
+            url: encodeURI(`${productUrl}?Color=${variant?.attributes?.Color}`),
+            sku: variant?.sku ?? '',
+            // TODO: Enable the color, to display the variant varies by the color.
+            // color: variant?.attributes?.Color,
+            offers: {
+                '@type': 'Offer',
+                itemCondition: 'https://schema.org/NewCondition',
+                availability: 'https://schema.org/InStock',
+                price: variant?.defaultPrice.price ?? '',
+                priceCurrency: variant?.defaultPrice.currency ?? '',
+                priceValidUntil: TWO_DAYS_FROM_NOW.toLocaleString(),
+            },
+        })) ?? [];
 
     const productSchema: schemas.WithContext<schemas.ProductGroup> = {
         '@context': 'https://schema.org',
@@ -117,18 +119,20 @@ export default async function CategoryProduct(props: ProductsProps) {
             name: 'HAY',
         },
         // TODO: replace with actual reviews from users
-        review: [{
-            '@type': 'Review',
-            author: {
-                '@type': 'Person',
-                name: 'John Doe',
+        review: [
+            {
+                '@type': 'Review',
+                author: {
+                    '@type': 'Person',
+                    name: 'John Doe',
+                },
+                reviewRating: {
+                    '@type': 'Rating',
+                    ratingValue: '5',
+                    bestRating: '5',
+                },
             },
-            reviewRating: {
-                '@type': 'Rating',
-                ratingValue: '5',
-                bestRating: '5',
-            },
-        }],
+        ],
     };
 
     return (
@@ -226,9 +230,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                             )}
                         </div>
                         <div className="py-4 sticky top-20">
-                            <h1 className="text-2xl font-bold">
-                                {currentVariant?.name ?? product.name}
-                            </h1>
+                            <h1 className="text-2xl font-bold">{currentVariant?.name ?? product.name}</h1>
                             <div className="line-clamp-2">
                                 <ContentTransformer json={product.description?.[0]} />
                             </div>

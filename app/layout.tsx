@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
         title: {
             default: title,
-            template: "%s | Furnitut",
+            template: '%s | Furnitut',
             absolute: `${title} | Furnitut`,
         },
         description,
@@ -28,12 +28,14 @@ export async function generateMetadata(): Promise<Metadata> {
         openGraph: {
             title: `${title} | Furnitut`,
             description,
-            images: [{
-                url: image?.url ?? '',
-                alt: image?.altText ?? '',
-                height: image?.height ?? 0,
-                width: image?.width ?? 0,
-            }],
+            images: [
+                {
+                    url: image?.url ?? '',
+                    alt: image?.altText ?? '',
+                    height: image?.height ?? 0,
+                    width: image?.width ?? 0,
+                },
+            ],
         },
     };
 }
