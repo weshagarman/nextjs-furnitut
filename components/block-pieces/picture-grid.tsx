@@ -28,7 +28,7 @@ export const PictureGrid = ({ block }: PictureGridProps) => {
                                 className="rounded-3xl overflow-hidden"
                                 showShowcases
                                 loading={'lazy'}
-                                sizes={'(max-width: 640px) 500w, 768w'}
+                                sizes={'(max-width: 450px) 200w, (max-width: 640px) 500w, 768w'}
                             />
                         </div>
                     ))}
