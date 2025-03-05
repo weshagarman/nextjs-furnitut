@@ -30,6 +30,7 @@ export const Image = ({
                           altText,
                           loading,
                           ogVariants,
+                          sizes,
                           ...image
                       }: ImageProps) => {
     const styles = {
@@ -60,6 +61,7 @@ export const Image = ({
                 variants={image.variants as CrystallizeImageVariants}
                 alt={altText ?? undefined}
                 loading={loading}
+                sizes={sizes ?? '(max-width: 640px) 500w, 768w'}
             />
         </div>
     );

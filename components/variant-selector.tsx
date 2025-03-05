@@ -99,7 +99,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                             )}
                         >
                             <div className=" overflow-hidden h-16 w-16 shrink-0 rounded-md border border-muted  ">
-                                <Image {...variant.images?.[0]} sizes="200px" />
+                                <Image {...variant.images?.[0]} sizes="(max-width: 640px) 100w, 200w" />
                             </div>
                             <div className="flex py-2 w-full justify-between px-4">
                                 <span className=" flex-col flex ">
@@ -139,7 +139,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                             >
                                 {facetIndex === 0 && (
                                     <div className="aspect-square overflow-hidden rounded-md">
-                                        <Image {...value.images[0]} sizes="200px" />
+                                        <Image {...value.images[0]} sizes="(max-width: 640px) 100w, 200w" />
                                     </div>
                                 )}
                                 <span className="py-2 block">{value.value}</span>

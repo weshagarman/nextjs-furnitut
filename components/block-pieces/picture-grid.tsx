@@ -10,6 +10,8 @@ type PictureGridProps = {
 export const PictureGrid = ({ block }: PictureGridProps) => {
     const { images } = block;
 
+    console.log(block);
+
     return (
         <div className="flex-col flex items-center max-w-screen-2xl mx-auto">
             <Typography {...block} />
@@ -24,7 +26,13 @@ export const PictureGrid = ({ block }: PictureGridProps) => {
                                 'sm:col-span-2': index > 1,
                             })}
                         >
-                            <Image {...image} className="rounded-3xl overflow-hidden" showShowcases loading={'lazy'} />
+                            <Image
+                                {...image}
+                                className="rounded-3xl overflow-hidden"
+                                showShowcases
+                                loading={'lazy'}
+                                sizes={'(max-width: 640px) 500w, 768w'}
+                            />
                         </div>
                     ))}
                 </div>
