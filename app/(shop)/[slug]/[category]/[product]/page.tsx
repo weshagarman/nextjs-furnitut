@@ -146,7 +146,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         preserveRatio
                                         sizes={index > 0 ? '400px' : '800px'}
                                         className={clsx(
-                                            index === 0 && '!col-span-2',
+                                            index === 0 && 'col-span-2!',
                                             'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full',
                                             '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
                                         )}
@@ -279,7 +279,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                                                 className="flex gap-3 justify-between px-4 py-3 border items-center border-muted bg-light rounded-lg last:border-b-0"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-12 rounded overflow-hidden">
+                                                    <div className="w-10 h-12 rounded-sm overflow-hidden">
                                                         <Image {...product?.firstImage} />
                                                     </div>
                                                     <div className="flex flex-col">
@@ -323,7 +323,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                 </div>
             </main>
             <div className="mt-24 border-t border-muted">
-                <div className="px-0  max-w-screen-2xl pt-24  mx-auto ">
+                <div className="px-0  max-w-(--breakpoint-2xl) pt-24  mx-auto ">
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>

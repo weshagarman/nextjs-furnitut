@@ -95,7 +95,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                             href={path + '?sku=' + variant.sku}
                             className={classNames(
                                 'bg-light rounded-lg overflow-hidden flex border-muted border p-1 gap-4 items-center',
-                                { '!border-dark': variant.sku === currentSku },
+                                { 'border-dark!': variant.sku === currentSku },
                             )}
                         >
                             <div className=" overflow-hidden h-16 w-16 shrink-0 rounded-md border border-muted  ">
@@ -133,7 +133,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                                 className={classNames(
                                     'bg-light rounded-lg overflow-hidden border-muted border text-xs p-1 text-center font-bold',
                                     {
-                                        '!border-dark': value.value === searchValue || (!searchValue && index === 0),
+                                        'border-dark!': value.value === searchValue || (!searchValue && index === 0),
                                     },
                                 )}
                             >

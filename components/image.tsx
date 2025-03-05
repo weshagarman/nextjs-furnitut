@@ -109,12 +109,12 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
             >
                 {product && (
                     <div className=" gap-4 flex w-full text-light py-2 pr-6 text-sm items-center">
-                        <div className="w-12 overflow-hidden rounded shrink-0 [&_img]:object-cover">
+                        <div className="w-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover">
                             <CrystallizeImage {...image} alt={image?.altText} className="h-full w-full"
                                               loading={'lazy'} />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-1">
-                            <span className="overflow-ellipsis text-nowrap w-full">{product.name}</span>
+                            <span className="text-ellipsis text-nowrap w-full">{product.name}</span>
                             <span className="text-xs font-medium">
                                 <Price price={price} />
                             </span>

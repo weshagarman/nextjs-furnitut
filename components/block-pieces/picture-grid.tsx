@@ -13,7 +13,7 @@ export const PictureGrid = ({ block }: PictureGridProps) => {
     console.log(block);
 
     return (
-        <div className="flex-col flex items-center max-w-screen-2xl mx-auto">
+        <div className="flex-col flex items-center max-w-(--breakpoint-2xl) mx-auto">
             <Typography {...block} />
             {!!images?.length && (
                 <div className="grid gap-8 sm:grid-cols-7 auto-rows-[30vh] w-full h-auto pb-24">

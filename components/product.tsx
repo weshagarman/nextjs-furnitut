@@ -31,14 +31,14 @@ export const Product = ({ product }: ProductProps) => {
                         {variants?.slice(0, 5).map((variant, index) => (
                             <Fragment key={variant?.sku ?? index}>
                                 {!!variant ? (
-                                    <div className="aspect-square w-full rounded relative border border-solid  border-muted">
+                                    <div className="aspect-square w-full rounded-sm relative border border-solid  border-muted">
                                         <Image {...variant?.firstImage} loading={'lazy'} />
                                     </div>
                                 ) : null}
                             </Fragment>
                         ))}
                         {totalVariants > 5 && (
-                            <span className="aspect-square flex text-sm  font-bold items-center justify-center  rounded relative border-solid overflow-hidden border border-muted">
+                            <span className="aspect-square flex text-sm  font-bold items-center justify-center  rounded-sm relative border-solid overflow-hidden border border-muted">
                                 +{totalVariants - 5}
                             </span>
                         )}

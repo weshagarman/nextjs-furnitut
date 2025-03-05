@@ -14,10 +14,10 @@ export const Banner = ({ block }: BannerProps) => {
     const styles = { aspectRatio: `${width}/${height}` } as React.CSSProperties;
 
     return (
-        <div className="flex-col flex items-center max-w-screen-2xl mx-auto">
+        <div className="flex-col flex items-center max-w-(--breakpoint-2xl) mx-auto">
             <Typography {...block} />
             {image && (
-                <div className="mt-12 max-w-screen-xl w-full h-auto mb-24 " style={styles}>
+                <div className="mt-12 max-w-(--breakpoint-xl) w-full h-auto mb-24 " style={styles}>
                     <Image
                         {...image}
                         showcases={image.showcases as Showcase[]}
