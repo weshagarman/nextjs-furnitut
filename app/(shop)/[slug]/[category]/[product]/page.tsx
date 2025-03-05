@@ -51,7 +51,7 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
     const productUrl = new URL(url, baseUrl);
 
     return {
-        title: `${title} | Furnitut`,
+        title: `${title}`,
         description,
         openGraph: {
             title: `${title} | Furnitut`,
