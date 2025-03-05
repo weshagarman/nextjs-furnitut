@@ -24,7 +24,7 @@ export const PictureGrid = ({ block }: PictureGridProps) => {
                                 'sm:col-span-2': index > 1,
                             })}
                         >
-                            <Image {...image} className="rounded-3xl overflow-hidden" showShowcases />
+                            <Image {...image} className="rounded-3xl overflow-hidden" showShowcases loading={'lazy'} />
                         </div>
                     ))}
                 </div>

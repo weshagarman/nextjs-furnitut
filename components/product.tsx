@@ -24,7 +24,7 @@ export const Product = ({ product }: ProductProps) => {
         >
             <div className="relative justify-stretch h-full max-h-5/6 flex flex-col">
                 <div className="rounded-xl overflow-hidden border grow border-muted aspect-portrait row-span-5">
-                    <Image {...firstImage} />
+                    <Image {...firstImage} loading="lazy" />
                 </div>
                 {totalVariants > 1 && (
                     <div className="grid grid-cols-6 gap-1.5 pt-1.5 ">
@@ -32,7 +32,7 @@ export const Product = ({ product }: ProductProps) => {
                             <Fragment key={variant?.sku ?? index}>
                                 {!!variant ? (
                                     <div className="aspect-square w-full rounded relative border border-solid  border-muted">
-                                        <Image {...variant?.firstImage} />
+                                        <Image {...variant?.firstImage} loading={'lazy'} />
                                     </div>
                                 ) : null}
                             </Fragment>
