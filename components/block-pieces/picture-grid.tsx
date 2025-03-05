@@ -9,9 +9,6 @@ type PictureGridProps = {
 
 export const PictureGrid = ({ block }: PictureGridProps) => {
     const { images } = block;
-
-    console.log(block);
-
     return (
         <div className="flex-col flex items-center max-w-(--breakpoint-2xl) mx-auto">
             <Typography {...block} />
