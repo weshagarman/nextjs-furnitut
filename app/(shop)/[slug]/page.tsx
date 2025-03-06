@@ -4,6 +4,7 @@ import { FetchAllCategoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import Link from 'next/link';
 import { Blocks } from '@/components/blocks';
+import { Metadata } from 'next';
 
 type Slug = 'products' | 'room';
 
@@ -17,10 +18,35 @@ export async function generateStaticParams() {
 
 const fetchData = async (slug: Slug) => {
     const response = await apiRequest(FetchAllCategoriesDocument, { path: `/${slug}` });
-    const { blocks, breadcrumbs, name, children } = response.data.browse?.category?.hits?.[0] ?? {};
+    const { blocks, breadcrumbs, name, children, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
-    return { name, blocks, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };
+    return { name, blocks, meta, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item), children: children?.hits };
 };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const { meta } = await fetchData(slug);
+    const { title, description, image } = meta ?? {};
+    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
+
+    return {
+        title,
+        description: description?.[0].textContent ?? '',
+        openGraph: {
+            title: `${title} | Furnitut`,
+            description: description?.[0].textContent ?? '',
+            url: encodeURI(`${baseUrl}/${slug}`),
+            images: [
+                {
+                    url: image?.[0]?.url ?? '',
+                    alt: image?.[0]?.altText ?? '',
+                    height: image?.[0]?.height ?? 0,
+                    width: image?.[0]?.width ?? 0,
+                },
+            ],
+        },
+    };
+}
 
 export default async function Page({ params }: PageProps) {
     const { slug } = await params;

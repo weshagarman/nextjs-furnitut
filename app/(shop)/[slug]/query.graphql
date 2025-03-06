@@ -23,6 +23,9 @@ query FetchAllCategories($path: String!) {
                         }
                     }
                 }
+                meta {
+                    ...metadata
+                }
             }
         }
     }
