@@ -43,6 +43,9 @@ query FetchStory($path: String!) {
                         }
                     }
                 }
+                meta {
+                    ...metadata
+                }
             }
         }
     }
@@ -50,10 +53,13 @@ query FetchStory($path: String!) {
 
 fragment storyContent on story {
     title
+    createdAt
+    publishedAt
     media {
         image {
             url
-            variants {
+            altText
+            variants(minWidth: 600, types: ["avif", "webp"]) {
                 url
                 width
                 height
