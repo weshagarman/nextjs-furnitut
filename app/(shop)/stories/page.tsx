@@ -2,13 +2,38 @@ import { FetchAllStoriesDocument } from '@/generated/graphql';
 import { apiRequest } from '@/utils/api-request';
 import { Story } from '@/components/story';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { Metadata } from 'next';
 
 const fetchData = async () => {
     const response = await apiRequest(FetchAllStoriesDocument);
-    const { title, children, breadcrumbs } = response.data.browse?.category?.hits?.[0] ?? {};
+    const { title, children, breadcrumbs, meta } = response.data.browse?.category?.hits?.[0] ?? {};
 
-    return { title, children: children?.hits, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item) };
+    return { title, meta, children: children?.hits, breadcrumbs: breadcrumbs?.[0]?.filter((item) => !!item) };
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+    const { meta } = await fetchData();
+    const { title, description, image } = meta ?? {};
+    const baseUrl = process.env.NEXT_PUBLIC_CANONICAL_URL;
+
+    return {
+        title,
+        description: description?.[0].textContent ?? '',
+        openGraph: {
+            title: `${title} | Furnitut`,
+            description: description?.[0].textContent ?? '',
+            url: encodeURI(`${baseUrl}/stories`),
+            images: [
+                {
+                    url: image?.[0]?.url ?? '',
+                    alt: image?.[0]?.altText ?? '',
+                    height: image?.[0]?.height ?? 0,
+                    width: image?.[0]?.width ?? 0,
+                },
+            ],
+        },
+    };
+}
 
 export default async function Stories() {
     const { title, children, breadcrumbs } = await fetchData();
