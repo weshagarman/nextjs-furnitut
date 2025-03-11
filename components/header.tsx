@@ -31,6 +31,7 @@ export const Header = () => {
                 <Link
                     href="/account"
                     className="flex items-center font-medium  border-x border-muted px-4 sm:px-6 gap-2 hover:bg-muted/20 active:bg-muted/40"
+                    data-testid="account-button"
                 >
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle

@@ -19,6 +19,7 @@ export const AddToCartButton = ({ input, type = 'default' }: AddToCartButtonProp
                     'bg-dark h-10 w-10 text-light rounded-xl text-lg font-bold aspect-square hover:bg-dark/90':
                         type === 'micro',
                 })}
+                data-testid="add-to-cart-button"
             >
                 {type === 'micro' ? '+' : isLoading ? 'Adding...' : 'Add to cart'}
             </button>

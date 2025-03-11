@@ -26,7 +26,12 @@ export const Typography = ({ title, description, callToAction, isFirstBlock }: T
                 <div className="flex pb-12">
                     {actions?.map((action) =>
                         !!action?.url ? (
-                            <a key={action.url} className="btn block-btn" href={action.url}>
+                            <a
+                                key={action.url}
+                                className="btn block-btn"
+                                href={action.url}
+                                data-testid={action.label?.toLowerCase().replaceAll(' ', '-')}
+                            >
                                 {action.label}
                             </a>
                         ) : null,

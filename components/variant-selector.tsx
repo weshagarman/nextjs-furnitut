@@ -136,6 +136,7 @@ export const VariantSelector = (props: VariantSelectorProps) => {
                                         'border-dark!': value.value === searchValue || (!searchValue && index === 0),
                                     },
                                 )}
+                                data-testid={`variant-selector-${key.toLowerCase()}-${value.value.toLowerCase()}`}
                             >
                                 {facetIndex === 0 && (
                                     <div className="aspect-square overflow-hidden rounded-md">

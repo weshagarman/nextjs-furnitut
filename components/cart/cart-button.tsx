@@ -19,6 +19,7 @@ export const CartButton = () => {
             <button
                 onClick={() => setIsOpen(true)}
                 className="flex items-center font-medium px-4 sm:px-6 gap-2 hover:bg-muted/20 active:bg-muted/40 rounded-r-full"
+                data-testid="cart-button"
             >
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

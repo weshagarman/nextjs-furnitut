@@ -21,6 +21,7 @@ export const Product = ({ product }: ProductProps) => {
         <Link
             href={path ?? '/'}
             className="rounded-2xl bg-quinary p-2 pb-0 text-dark border-muted border-solid border text-primary relative flex flex-col items-stretch bg-light"
+            data-testid={path}
         >
             <div className="relative justify-stretch h-full max-h-5/6 flex flex-col">
                 <div className="rounded-xl overflow-hidden border grow border-muted aspect-portrait row-span-5">
