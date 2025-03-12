@@ -28,5 +28,15 @@ export const pushCrystallizeOrder = async (
         await fulfillCart(cartId, orderCreatedConfirmation.id);
     }
 
+    /**
+     * TODO: To manage order fulfillment, you can place the order in a fulfillment pipeline.
+     * Use the appropriate pipeline and stage IDs to assign the order accordingly.
+     * import { createOrderPipelineStageSetter } from '@crystallize/js-api-client';
+     * Instantiate the function
+     * const setOrderPipeline = createOrderPipelineStageSetter(crystallizeClient);
+     * And assign the order to the pipeline ID and stage ID
+     * await setOrderPipeline(orderCreatedConfirmation.id, "<YOUR_PIPELINE_ID>", "<YOUR_STAGE_ID>")
+     */
+
     return orderCreatedConfirmation;
 };

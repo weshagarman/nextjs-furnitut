@@ -12,8 +12,8 @@ importers:
         specifier: ^5.69.1
         version: 5.71.2
       '@crystallize/js-api-client':
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^4.2.0
+        version: 4.2.0
       '@crystallize/node-service-api-request-handlers':
         specifier: ^4.2.0
         version: 4.2.0(stripe@17.7.0)(zod@3.24.2)
@@ -222,8 +222,8 @@ packages:
     resolution: {integrity: sha512-Y3IR1cRnOxOCDvMmNiym7XpXQ93iGDDPHx+Zj+NM+rg0fBaShfQLkg+hKPaZCEvg5N/LeCo4+Rj/i3FuJsIQaw==}
     engines: {node: '>=6.9.0'}
 
-  '@crystallize/js-api-client@3.2.0':
-    resolution: {integrity: sha512-UdWoYNJ53mvzb0dM41e16xUmfb3ndbxBTm6CJdrxCYXsIoEHrnXVOa/ccL4JCuVHKyFyg0Ks6k+b16NKXOIwKA==}
+  '@crystallize/js-api-client@4.2.0':
+    resolution: {integrity: sha512-jKV+BcRYAGrwjgZhE4kf/0SEL132EJ1+//Y8JHOcJyfoSh5WT2Za4/C64bEqsSxQfh/4Uddif9sRy6345f8nIA==}
 
   '@crystallize/node-service-api-request-handlers@4.2.0':
     resolution: {integrity: sha512-gf8mCo4JV5+EX9Q8zOj2g/fkLo0RI+osrjTeYFMuvSacAbq0ZGYWg25ix8oiRAFHDvM42tMkSB73Cnr3I2hFGg==}
@@ -3469,7 +3469,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@crystallize/js-api-client@3.2.0':
+  '@crystallize/js-api-client@4.2.0':
     dependencies:
       dotenv: 16.4.7
       json-to-graphql-query: 2.3.0
@@ -3480,7 +3480,7 @@ snapshots:
   '@crystallize/node-service-api-request-handlers@4.2.0(stripe@17.7.0)(zod@3.24.2)':
     dependencies:
       '@adyen/api-library': 13.1.3
-      '@crystallize/js-api-client': 3.2.0
+      '@crystallize/js-api-client': 4.2.0
       concurrently: 7.6.0
       jsonwebtoken: 8.5.1
       node-fetch: 2.7.0
@@ -3495,7 +3495,7 @@ snapshots:
 
   '@crystallize/reactjs-components@2.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@crystallize/js-api-client': 3.2.0
+      '@crystallize/js-api-client': 4.2.0
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
