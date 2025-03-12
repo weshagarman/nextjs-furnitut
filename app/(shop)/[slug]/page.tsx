@@ -67,7 +67,12 @@ export default async function Page({ params }: PageProps) {
                         const href = !!child && 'path' in child ? child?.path : undefined;
 
                         return !!href ? (
-                            <Link href={href} key={child?.id} className="bg-dark text-light rounded-full px-4 py-2">
+                            <Link
+                                href={href}
+                                key={child?.id}
+                                className="bg-dark text-light rounded-full px-4 py-2"
+                                data-testid={href}
+                            >
                                 {child?.name}
                             </Link>
                         ) : null;

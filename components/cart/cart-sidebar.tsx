@@ -57,8 +57,9 @@ export const CartSidebar = () => {
                 )}
                 <Link
                     href="/checkout"
-                    className="bg-dark text-light text-lg rounded-xl px-8 py-4 w-full border border-10 block text-center"
+                    className="bg-dark text-light text-lg rounded-xl px-8 py-4 w-full border-10 block text-center"
                     onClick={onClose}
+                    data-testid="checkout-button"
                 >
                     Checkout
                 </Link>

@@ -10,6 +10,7 @@ export const Story: React.FC<{ story: any }> = ({ story }) => {
         <Link
             href={path}
             className="rounded-2xl bg-quinary p-2 text-dark border-muted border-solid border text-primary relative block flex-col items-stretch bg-light"
+            data-testid={path}
         >
             <div className="relative aspect-video  flex flex-col justify-stretch ">
                 <div className="rounded-xl overflow-hidden  h-full shrink border border-muted">

@@ -27,7 +27,7 @@ export const Navigation = async ({ className }: NavigationProps) => {
     return (
         <div className={className}>
             {navigation?.map(({ href, name }) => (
-                <Link href={href} className="h-full flex items-center" key={name}>
+                <Link href={href} className="h-full flex items-center" key={name} data-testid={`navigation-link-${name.toLowerCase()}`}>
                     {name}
                 </Link>
             ))}
