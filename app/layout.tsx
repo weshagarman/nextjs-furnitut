@@ -23,6 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
             template: '%s | Furnitut',
             absolute: `${title} | Furnitut`,
         },
+        metadataBase: new URL(process.env.NEXT_PUBLIC_CANONICAL_URL ?? 'http://localhost:3000'),
         description,
         creator: 'Crystallize Team',
         openGraph: {
