@@ -81,7 +81,7 @@ export const CartSidebar = () => {
                                 <Price price={{ price: cart.total.taxAmount }} />
                             </span>
                         </div>
-                        {cart.total.discounts.length > 0 && (
+                        {cart.total.discounts?.length > 0 && (
                             <div className="text-dark/70 text-sm flex justify-between items-center mb-4">
                                 <span>Total savings:</span>
                                 <span>
