@@ -17,8 +17,8 @@ export const CartItems = () => {
     return (
         <ul>
             {cart.items.map((item: CartItem, index) => (
-                <Fragment key={`${item.variant.sku}`}>
-                    <li key={`${item.variant.sku}`} className="flex mb-4 justify-between">
+                <Fragment key={item.variant.sku}>
+                    <li className="flex mb-4 justify-between">
                         <div className="flex w-full">
                             <div className="shrink-0 relative h-24 w-20 aspect-square border border-muted rounded-sm overflow-hidden">
                                 <Image {...item.images[0]} className="object-cover" />
