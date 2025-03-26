@@ -75,7 +75,6 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
     const image = product?.firstImage || product?.defaultVariant?.firstImage;
     const price = product?.defaultPrice || product?.defaultVariant?.defaultPrice;
     const link = product?.product?.path || product?.path;
-    console.log(showcase);
 
     const HotspotWrapper = ({ children }: { children: React.ReactElement[] }) => {
         const classes =
@@ -110,7 +109,7 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
             >
                 {product && (
                     <div className=" gap-4 flex w-full text-light py-2 pr-6 text-sm items-center">
-                        <div className="w-12 h-12 shrink-0 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover [&_img]:object-center bg-light">
+                        <div className="w-12 h-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover [&_img]:object-center bg-light">
                             <CrystallizeImage
                                 {...image}
                                 alt={image?.altText}
