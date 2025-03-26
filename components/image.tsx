@@ -48,7 +48,7 @@ export const Image = ({
     return (
         <div
             style={styles}
-            className={clsx(orientation, !preserveRatio && 'crystallize-image', showShowcases && 'relative', className)}
+            className={clsx(orientation, { 'crystallize-image': !preserveRatio, relative: showShowcases }, className)}
         >
             {showShowcases && (
                 <div className="absolute top-0 left-0 w-full h-full">
