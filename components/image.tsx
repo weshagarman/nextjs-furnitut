@@ -48,7 +48,7 @@ export const Image = ({
     return (
         <div
             style={styles}
-            className={clsx(orientation, !preserveRatio && 'crystallize-image', showShowcases && 'relative', className)}
+            className={clsx(orientation, { 'crystallize-image': !preserveRatio, relative: showShowcases }, className)}
         >
             {showShowcases && (
                 <div className="absolute top-0 left-0 w-full h-full">
@@ -109,12 +109,13 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
             >
                 {product && (
                     <div className=" gap-4 flex w-full text-light py-2 pr-6 text-sm items-center">
-                        <div className="w-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover">
+                        <div className="w-12 h-12 overflow-hidden rounded-sm shrink-0 [&_img]:object-cover [&_img]:object-center bg-light">
                             <CrystallizeImage
                                 {...image}
                                 alt={image?.altText}
-                                className="h-full w-full"
+                                className="h-full w-12"
                                 loading={'lazy'}
+                                sizes="100px"
                             />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-1">

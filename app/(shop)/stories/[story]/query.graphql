@@ -32,15 +32,20 @@ query FetchStory($path: String!) {
                     title
                     body
                     images {
-                        url
-                        altText
-                        caption
-                        focalPoint
-                        variants(maxWidth: 1000, types: ["avif"]) {
+                        ...showCaseImage
+                    }
+                    videos {
+                        thumbnails {
                             url
-                            width
-                            height
+                            altText
+                            variants {
+                                width
+                                height
+                                url
+                            }
                         }
+                        title
+                        playlists
                     }
                 }
                 meta {
@@ -66,15 +71,7 @@ fragment storyContent on story {
             }
         }
         shoppableImage {
-            url
-            variants {
-                url
-                width
-                height
-            }
-            showcases {
-                ...showcases
-            }
+            ...showCaseImage
         }
         video {
             playlists

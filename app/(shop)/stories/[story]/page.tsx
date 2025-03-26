@@ -62,9 +62,7 @@ export async function generateMetadata({ params }: StoriesProps): Promise<Metada
 
 export default async function StoryPage(props: StoriesProps) {
     const params = await props.params;
-    const { intro, featured, upNext, story, title, media, publishedAt } = await fetchData(
-        `/stories/${params.story}`,
-    );
+    const { intro, featured, upNext, story, title, media, publishedAt } = await fetchData(`/stories/${params.story}`);
 
     const storySchema: WithContext<Article> = {
         '@context': 'https://schema.org',

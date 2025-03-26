@@ -1,6 +1,3 @@
-#import "./../block-fragments/image.graphql"
-#import "./../block-fragments/layout.graphql"
-
 fragment banner on BannerPiece {
     title
     description
@@ -8,49 +5,7 @@ fragment banner on BannerPiece {
         ...layout
     }
     banner {
-        url
-        altText
-        focalPoint
-        variants {
-            url
-            width
-            height
-        }
-        showcases {
-            hotspot
-            items {
-                name
-                path
-                ... on product {
-                    defaultVariant {
-                        defaultPrice: priceVariants(key: "default")
-                        firstImage {
-                            url
-                            variants(maxWidth: 200, types: ["avif"]) {
-                                width
-                                url
-                                height
-                            }
-                        }
-                    }
-                }
-            }
-            variants {
-                name
-                product {
-                    path
-                }
-                defaultPrice: priceVariants(key: "default")
-                firstImage {
-                    url
-                    variants(maxWidth: 200, types: ["avif"]) {
-                        width
-                        url
-                        height
-                    }
-                }
-            }
-        }
+        ...showCaseImage
     }
     callToAction {
         action {

@@ -319,7 +319,7 @@ export default async function CategoryProduct(props: ProductsProps) {
                 </div>
             </main>
             <div className="mt-24 border-t border-muted">
-                <div className="px-0  max-w-(--breakpoint-2xl) pt-24  mx-auto ">
+                <div className="px-12  max-w-(--breakpoint-2xl) pt-24  mx-auto ">
                     <h2 className="text-2xl py-4 font-bold">Related products</h2>
 
                     <Slider type="product" options={{ loop: false, align: 'start' }}>

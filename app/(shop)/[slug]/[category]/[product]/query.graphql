@@ -35,15 +35,7 @@ query FetchProduct($path: String!) {
                     title
                     body(format: json)
                     images {
-                        url
-                        showcases {
-                            ...showcases
-                        }
-                        variants {
-                            url
-                            width
-                            height
-                        }
+                        ...showCaseImage
                     }
                 }
                 relatedProducts {
