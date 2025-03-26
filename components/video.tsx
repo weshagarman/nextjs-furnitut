@@ -16,7 +16,7 @@ export const Video = ({
     options,
     tracks,
 }: {
-    playlists: string[];
+    playlists?: any;
     thumbnails?: any;
     options?: any;
     tracks?: any;

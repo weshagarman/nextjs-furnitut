@@ -32,15 +32,20 @@ query FetchStory($path: String!) {
                     title
                     body
                     images {
-                        url
-                        altText
-                        caption
-                        focalPoint
-                        variants(maxWidth: 1000, types: ["avif"]) {
+                        ...showCaseImage
+                    }
+                    videos {
+                        thumbnails {
                             url
-                            width
-                            height
+                            altText
+                            variants {
+                                width
+                                height
+                                url
+                            }
                         }
+                        title
+                        playlists
                     }
                 }
                 meta {
@@ -66,19 +71,7 @@ fragment storyContent on story {
             }
         }
         shoppableImage {
-<<<<<<< Updated upstream:app/(shop)/stories/[story]/query.graphql
-            url
-            variants {
-                url
-                width
-                height
-            }
-            showcases {
-                ...showcases
-            }
-=======
             ...showCaseImage
->>>>>>> Stashed changes:app/stories/[story]/query.graphql
         }
         video {
             playlists
@@ -92,7 +85,6 @@ fragment storyContent on story {
         }
     }
 }
-<<<<<<< Updated upstream:app/(shop)/stories/[story]/query.graphql
 
 fragment commonProductVariant on ProductVariantForProduct {
     defaultPrice: priceVariants(key: "default")
@@ -124,5 +116,3 @@ fragment showcases on Showcase {
         ...commonProductVariant
     }
 }
-=======
->>>>>>> Stashed changes:app/stories/[story]/query.graphql

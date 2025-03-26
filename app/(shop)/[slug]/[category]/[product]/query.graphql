@@ -35,19 +35,7 @@ query FetchProduct($path: String!) {
                     title
                     body(format: json)
                     images {
-<<<<<<< Updated upstream:app/(shop)/[slug]/[category]/[product]/query.graphql
-                        url
-                        showcases {
-                            ...showcases
-                        }
-                        variants {
-                            url
-                            width
-                            height
-                        }
-=======
                         ...showCaseImage
->>>>>>> Stashed changes:app/products/[category]/[product]/query.graphql
                     }
                 }
                 relatedProducts {
@@ -81,56 +69,11 @@ query FetchProduct($path: String!) {
                 }
 
                 variants {
-<<<<<<< Updated upstream:app/(shop)/[slug]/[category]/[product]/query.graphql
                     ...productVariant
                 }
 
                 meta {
                     ...metadata
-=======
-                    name
-                    sku
-                    priceVariants
-                    attributes
-                    stockLocations
-                    matchingProducts {
-                        variants {
-                            sku
-                            name
-                            product {
-                                path
-                            }
-                            defaultPrice: priceVariants(key: "default")
-                            firstImage {
-                                url
-                                variants(maxWidth: 200, types: ["avif"]) {
-                                    url
-                                    height
-                                    width
-                                }
-                            }
-                        }
-                    }
-                    dimensions {
-                        depth
-                        depthUnit
-                        height
-                        heightUnit
-                        width
-                        widthUnit
-                        weight
-                        weightUnit
-                    }
-                    images {
-                        url
-                        variants(maxWidth: 800, types: ["avif"]) {
-                            url
-                            key
-                            width
-                            height
-                        }
-                    }
->>>>>>> Stashed changes:app/products/[category]/[product]/query.graphql
                 }
             }
         }

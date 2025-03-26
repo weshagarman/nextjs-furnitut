@@ -17,7 +17,6 @@ export const Media = ({
     sizes?: string;
 }) => {
     if (video?.[0]) {
-        console.log('video', video);
         return <Video {...video[0]} sizes={sizes} />;
     }
     if (shoppableImage) {
