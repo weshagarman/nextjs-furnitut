@@ -66,6 +66,7 @@ fragment storyContent on story {
             }
         }
         shoppableImage {
+<<<<<<< Updated upstream:app/(shop)/stories/[story]/query.graphql
             url
             variants {
                 url
@@ -75,6 +76,9 @@ fragment storyContent on story {
             showcases {
                 ...showcases
             }
+=======
+            ...showCaseImage
+>>>>>>> Stashed changes:app/stories/[story]/query.graphql
         }
         video {
             playlists
@@ -88,6 +92,7 @@ fragment storyContent on story {
         }
     }
 }
+<<<<<<< Updated upstream:app/(shop)/stories/[story]/query.graphql
 
 fragment commonProductVariant on ProductVariantForProduct {
     defaultPrice: priceVariants(key: "default")
@@ -119,3 +124,5 @@ fragment showcases on Showcase {
         ...commonProductVariant
     }
 }
+=======
+>>>>>>> Stashed changes:app/stories/[story]/query.graphql

@@ -1,9 +1,6 @@
 import { Image } from '@/components/image';
 import { Video } from '@/components/video';
 
-//@Todo: import this to next
-import '@crystallize/reactjs-components/assets/video/styles.css';
-
 export const Media = ({
     video,
     shoppableImage,
@@ -20,7 +17,8 @@ export const Media = ({
     sizes?: string;
 }) => {
     if (video?.[0]) {
-        return null;
+        console.log('video', video);
+        return <Video {...video[0]} sizes={sizes} />;
     }
     if (shoppableImage) {
         return (

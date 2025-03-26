@@ -115,6 +115,7 @@ export const HotSpot = ({ showcase }: { showcase: any }) => {
                                 alt={image?.altText}
                                 className="h-full w-full"
                                 loading={'lazy'}
+                                sizes="100px"
                             />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-1">
