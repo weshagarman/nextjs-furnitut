@@ -21,6 +21,9 @@ query FetchStory($path: String!) {
                             }
                         }
                     }
+                    variants {
+                        ...featuredVariant
+                    }
                 }
                 upNext {
                     items {
@@ -54,6 +57,16 @@ query FetchStory($path: String!) {
             }
         }
     }
+}
+
+fragment featuredVariant on ProductVariant {
+    sku
+    name
+    product {
+        path
+    }
+    attributes
+    ...commonProductVariant
 }
 
 fragment storyContent on story {

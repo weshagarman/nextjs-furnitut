@@ -13,7 +13,14 @@ export const ParagraphCollection = ({ paragraphs }: ParagraphCollectionProps) =>
         <div key={index} className="frntr-paragraph  w-auto py-6 first:pt-0">
             <div className="mb-10 mx-auto">
                 <h2 className="font-medium mb-2 mt-10 text-2xl">{paragraph.title}</h2>
-                <div className="frntr-content-transformer text-lg leading-8 [&>ul]:list-disc [&>ol]:list-decimal [&>ol]:list-inside [&>ul]:list-inside [&>ul]:py-4 [&>ol]:py-4">
+                <div
+                    className={clsx(
+                        'frntr-content-transformer text-lg leading-8',
+                        '[&>ol]:list-decimal [&>ol]:list-inside [&>ol]:py-4',
+                        '[&>ul]:list-disc [&>ul]:list-inside [&>ul]:py-4',
+                        '[&_a]:underline [&_a]:decoration-1 [&_a]:underline-offset-2 [&_a]:font-bold',
+                    )}
+                >
                     <ContentTransformer json={paragraph.body} />
                 </div>
                 <div className="mt-6 grid grid-cols-4 mb-6 pb-6 gap-4 [&_.img-portrait]:col-span-2 [&_.img-landscape]:col-span-4 grid-flow-row-dense">
