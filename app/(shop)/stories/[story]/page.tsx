@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import clsx from 'classnames';
 import {
-    CommonProductVariantFragment,
     FetchStoryDocument,
+    FeaturedVariantFragment,
     Paragraph,
     Product,
     ProductVariantForProduct,
@@ -97,6 +97,63 @@ export default async function StoryPage(props: StoriesProps) {
         },
     }));
 
+    const generateQueryParams = (attributes: Record<string, string> | undefined): string => {
+        return attributes ? new URLSearchParams(attributes).toString() : '';
+    };
+
+    const renderVariantItem = (variant: FeaturedVariantFragment | null, index: number) => {
+        if (!variant) {
+            return null;
+        }
+
+        const queryParams = generateQueryParams(variant.attributes);
+
+        return (
+            <div className="flex gap-3 px-4 py-3 border-b border-muted" key={`${variant.sku}-featured-${index}`}>
+                <div className="w-10 h-12 rounded-sm overflow-hidden">
+                    <Image {...variant.firstImage} />
+                </div>
+                <div className="flex flex-col">
+                    {variant.product?.path && (
+                        <Link href={`${variant.product.path}?${queryParams}`}>{variant.name}</Link>
+                    )}
+                    <span className="text-sm font-bold">
+                        <Price price={variant.defaultPrice} />
+                    </span>
+                </div>
+            </div>
+        );
+    };
+
+    const renderProductItem = (product: Product | null, index: number) => {
+        if (!product) {
+            return null;
+        }
+
+        const defaultVariant = product.defaultVariant as ProductVariantForProduct;
+        const price = defaultVariant?.defaultPrice as unknown as {
+            price: number;
+            currency?: string | undefined;
+        };
+
+        return (
+            <div
+                className="flex gap-3 px-4 py-3 border-b border-muted"
+                key={`${defaultVariant?.sku}-featured-${index}`}
+            >
+                <div className="w-10 h-12 rounded-sm overflow-hidden">
+                    <Image {...defaultVariant?.firstImage} />
+                </div>
+                <div className="flex flex-col">
+                    {product.path && <Link href={product.path}>{product.name}</Link>}
+                    <span className="text-sm font-bold">
+                        <Price price={price} />
+                    </span>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <>
             <main className="mt-40">
@@ -121,28 +178,10 @@ export default async function StoryPage(props: StoriesProps) {
                         <div className="col-span-2 px-12 pt-6">
                             <h3 className="font-bold text-sm mb-4">Featured products</h3>
                             <div className="sticky top-20 min-h-[200px] bg-light rounded-lg border border-muted flex flex-col">
-                                {featured?.items?.map((item, index) => {
-                                    const product = item as Product;
-                                    const price = (product.defaultVariant as CommonProductVariantFragment)
-                                        ?.defaultPrice;
-
-                                    return (
-                                        <div
-                                            className="flex gap-3 px-4 py-3 border-b border-muted"
-                                            key={`${product.defaultVariant?.sku}-featured-${index}`}
-                                        >
-                                            <div className="w-10 h-12 rounded-sm overflow-hidden">
-                                                <Image {...product.defaultVariant?.firstImage} />
-                                            </div>
-                                            <div className="flex flex-col">
-                                                {!!product.path && <Link href={product.path}>{product.name}</Link>}
-                                                <span className="text-sm font-bold">
-                                                    <Price price={price} />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                {featured.variants?.length
+                                    ? featured.variants.map(renderVariantItem)
+                                    : // @ts-expect-error
+                                      featured.items?.map(renderProductItem)}
                             </div>
                         </div>
                     )}
