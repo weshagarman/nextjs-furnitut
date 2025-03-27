@@ -46,7 +46,7 @@ export async function generateMetadata(props: ProductsProps): Promise<Metadata> 
     const description = meta?.description[0].textContent;
     const image = currentVariant?.images?.[0];
     const ogImage = image?.ogVariants?.[0];
-    const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {})
+    const attributesQueryParams = new URLSearchParams(currentVariant?.attributes ?? {});
 
     return {
         title: `${title}`,
@@ -143,10 +143,10 @@ export default async function CategoryProduct(props: ProductsProps) {
                                         {...image}
                                         preserveRatio
                                         sizes={index > 0 ? '400px' : '800px'}
+                                        wrapperClassName={clsx(index === 0 && 'col-span-2!')}
                                         className={clsx(
-                                            index === 0 && 'col-span-2!',
-                                            'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full',
-                                            '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
+                                            'overflow-hidden rounded-2xl border border-muted bg-light h-full max-w-full',
+                                            '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full',
                                         )}
                                     />
                                 );

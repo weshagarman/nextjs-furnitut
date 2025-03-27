@@ -29,17 +29,17 @@ export const ParagraphCollection = ({ paragraphs }: ParagraphCollectionProps) =>
                             <Image
                                 key={index}
                                 {...image}
+                                loading="lazy"
                                 preserveRatio
                                 sizes={index > 0 ? '400px' : '800px'}
                                 showShowcases={!!image?.showcases?.length}
                                 className={clsx(
-                                    'overflow-hidden rounded-2xl border border-muted bg-light relative h-full max-w-full',
-                                    '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full [&_figure]:h-full',
+                                    'overflow-hidden rounded-2xl border border-muted bg-light h-full max-w-full',
+                                    '[&_img]:object-cover [&_img]:max-w-none [&_img]:w-full [&_img]:h-full',
                                     {
                                         'col-span-4!': index === 0 && paragraph.images && paragraph.images.length < 1,
                                     },
                                 )}
-                                loading={'lazy'}
                             />
                         );
                     })}
