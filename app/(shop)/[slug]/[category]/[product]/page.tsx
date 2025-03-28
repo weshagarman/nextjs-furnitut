@@ -247,7 +247,9 @@ export default async function CategoryProduct(props: ProductsProps) {
                                             variantName: currentVariant.name || product.name || 'Variant',
                                             productName: product.name || 'Variant',
                                             sku: currentVariant.sku,
-                                            image: currentVariant?.images?.[0]?.variants?.[0],
+                                            image:
+                                                currentVariant?.images?.[0]?.variants?.[0] ??
+                                                currentVariant?.images?.[0],
                                             quantity: 1,
                                             price: {
                                                 currency: currentVariant.defaultPrice?.currency || 'EUR',
