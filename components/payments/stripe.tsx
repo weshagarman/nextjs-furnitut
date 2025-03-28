@@ -12,7 +12,12 @@ export const StripeButton: React.FC<{
     );
 };
 
-const stripePromise = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '');
+const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+
+let stripePromise = null;
+if (STRIPE_PUBLIC_KEY) {
+    stripePromise = await loadStripe(STRIPE_PUBLIC_KEY);
+}
 
 export const Stripe = ({ cartId }: { cartId?: string }) => {
     const [clientSecret, setClientSecret] = useState<string>('');
@@ -31,8 +36,8 @@ export const Stripe = ({ cartId }: { cartId?: string }) => {
             });
     }, [cartId]);
 
-    if (!clientSecret) {
-        return null;
+    if (!clientSecret || !stripePromise) {
+        return <div className="p-8 text-vivid">Payment method not set</div>;
     }
     return (
         <Elements options={{ clientSecret }} stripe={stripePromise}>
