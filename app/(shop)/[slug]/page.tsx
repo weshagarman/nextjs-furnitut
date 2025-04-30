@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
     const { slug } = await params;
 
-    if (slug !== 'products' && slug !== 'room') {
+    if (slug !== 'products' && slug !== 'room' && slug !== 'entertainment') {
         return notFound();
     }
 
